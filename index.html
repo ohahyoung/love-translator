@@ -15,17 +15,44 @@
   <div id="onboarding" class="onboarding">
     <div class="onboarding__card" data-step="intro">
 
-      <!-- STEP 0: 인트로 -->
+      <!-- STEP 0: 인트로 (시안 A · 화성/금성) -->
       <section class="ob-step ob-step--active" data-step="intro">
-        <div class="ob-logo">💌</div>
-        <h1 class="ob-title">이 사랑, <span class="grad">통역</span>됩니다.</h1>
+        <div class="ob-kicker">남자는 화성에서, 여자는 금성에서</div>
+
+        <!-- 두 화자 일러스트 -->
+        <div class="mv-stage">
+          <svg class="mv-face mv-face--m" viewBox="0 0 120 120" aria-hidden="true">
+            <circle cx="60" cy="62" r="42" fill="#dcebfb" stroke="#3f6f9e" stroke-width="3"/>
+            <path d="M40 50 q6 -7 14 0" fill="none" stroke="#3f6f9e" stroke-width="3" stroke-linecap="round"/>
+            <path d="M66 50 q6 -7 14 0" fill="none" stroke="#3f6f9e" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="47" cy="58" r="3.4" fill="#3f6f9e"/>
+            <circle cx="73" cy="58" r="3.4" fill="#3f6f9e"/>
+            <path d="M52 80 q8 6 16 0" fill="none" stroke="#3f6f9e" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="95" cy="30" r="13" fill="#fff" stroke="#3f6f9e" stroke-width="2.5"/>
+            <text x="95" y="35" text-anchor="middle" font-size="15" fill="#3f6f9e" font-weight="700">♂</text>
+          </svg>
+
+          <div class="mv-bubbles">
+            <span class="mv-bubble mv-bubble--said">"됐어 오지마"</span>
+            <span class="mv-bubble mv-bubble--mean">사실은 와서<br/>달래주길 바라는 걸 수도</span>
+          </div>
+
+          <svg class="mv-face mv-face--f" viewBox="0 0 120 120" aria-hidden="true">
+            <circle cx="60" cy="62" r="42" fill="#ffe2ec" stroke="#d4577f" stroke-width="3"/>
+            <path d="M40 50 q6 -6 14 0" fill="none" stroke="#d4577f" stroke-width="3" stroke-linecap="round"/>
+            <path d="M66 50 q6 -6 14 0" fill="none" stroke="#d4577f" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="47" cy="58" r="3.4" fill="#d4577f"/>
+            <circle cx="73" cy="58" r="3.4" fill="#d4577f"/>
+            <path d="M52 82 q8 -5 16 0" fill="none" stroke="#d4577f" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="25" cy="30" r="13" fill="#fff" stroke="#d4577f" stroke-width="2.5"/>
+            <text x="25" y="35" text-anchor="middle" font-size="15" fill="#d4577f" font-weight="700">♀</text>
+          </svg>
+        </div>
+
+        <h1 class="ob-title mv-title">이 사랑, <span class="grad">통역</span>됩니다.</h1>
         <p class="ob-sub">같은 말을 같은 뜻으로 듣지 못하는 순간을 위해.<br />
           외국어가 아니라 <b>관계의 맥락</b>을 통역해 드려요.</p>
-        <div class="ob-example">
-          <span class="ob-example__from">"됐어 오지마"</span>
-          <span class="ob-example__arrow">→</span>
-          <span class="ob-example__to">"사실은 와서 달래주길 바라는 걸 수도"</span>
-        </div>
+
         <div class="ob-actions">
           <button class="btn btn--primary" data-action="go-bot">데모로 시작하기</button>
           <button class="btn btn--ghost" data-action="real-connect">실제 연동</button>

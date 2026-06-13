@@ -336,3 +336,48 @@ body {
   .room { min-width: 220px; }
   .chat-head__hint { display: none; }
 }
+
+/* ========================================================= 
+   시안 A · 화성/금성 컨셉형 (design/a-marsvenus)
+   ========================================================= */
+body {
+  background:
+    radial-gradient(900px 500px at 0% 0%, #eef4fb, transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, #fdeef3, transparent 55%),
+    #f6f1e7; /* 크림 종이 */
+}
+.onboarding__card { border-radius: 26px; }
+.onboarding__card::before { background: linear-gradient(90deg, #5a8ec2, #d4577f); }
+
+.ob-kicker {
+  text-align: center; font-size: 13px; letter-spacing: 2px;
+  color: #9a8f7e; font-weight: 600; text-transform: none; margin-bottom: 6px;
+}
+.mv-stage {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  gap: 6px; margin: 8px auto 18px; max-width: 460px;
+}
+.mv-face { width: 100%; max-width: 120px; }
+.mv-face--m { justify-self: end; animation: mvFloat 4s ease-in-out infinite; }
+.mv-face--f { justify-self: start; animation: mvFloat 4s ease-in-out infinite .6s; transform: scaleX(-1); }
+@keyframes mvFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.mv-face--f { animation-name: mvFloatF; }
+@keyframes mvFloatF { 0%,100% { transform: scaleX(-1) translateY(0); } 50% { transform: scaleX(-1) translateY(-6px); } }
+
+.mv-bubbles { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.mv-bubble {
+  position: relative; font-size: 12.5px; line-height: 1.35; text-align: center;
+  padding: 8px 13px; border-radius: 14px; white-space: nowrap;
+}
+.mv-bubble--said {
+  background: #eaf2fb; border: 1.5px solid #bcd6f0; color: #3f6f9e; font-weight: 700;
+}
+.mv-bubble--mean {
+  background: #fff; border: 1.5px dashed #e7a8be; color: #d4577f; font-weight: 600;
+  white-space: normal; box-shadow: 0 6px 16px rgba(212,87,127,.14);
+  animation: mvPop 3s ease-in-out infinite;
+}
+@keyframes mvPop { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+.mv-bubble--mean::before { content: "통역 ↓"; display:block; font-size:10px; color:#caa; margin-bottom:3px; font-weight:700; }
+
+.mv-title { font-size: 32px; }
