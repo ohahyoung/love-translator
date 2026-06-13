@@ -15,22 +15,43 @@
   <div id="onboarding" class="onboarding">
     <div class="onboarding__card" data-step="intro">
 
-      <!-- STEP 0: 인트로 -->
+      <!-- STEP 0: 인트로 (시안 B · 썸원 무드) -->
       <section class="ob-step ob-step--active" data-step="intro">
-        <div class="ob-logo">💌</div>
-        <h1 class="ob-title">이 사랑, <span class="grad">통역</span>됩니다.</h1>
-        <p class="ob-sub">같은 말을 같은 뜻으로 듣지 못하는 순간을 위해.<br />
-          외국어가 아니라 <b>관계의 맥락</b>을 통역해 드려요.</p>
-        <div class="ob-example">
-          <span class="ob-example__from">"됐어 오지마"</span>
-          <span class="ob-example__arrow">→</span>
-          <span class="ob-example__to">"사실은 와서 달래주길 바라는 걸 수도"</span>
+        <!-- 떠다니는 손그림 하트 -->
+        <div class="sm-doodles" aria-hidden="true">
+          <span class="sm-heart sm-heart--1">♥</span>
+          <span class="sm-heart sm-heart--2">♡</span>
+          <span class="sm-heart sm-heart--3">♥</span>
+          <span class="sm-spark sm-spark--1">✦</span>
+          <span class="sm-spark sm-spark--2">✧</span>
         </div>
+
+        <!-- 마스코트: 통역몽 -->
+        <div class="sm-mascot">
+          <svg viewBox="0 0 160 150" aria-hidden="true">
+            <ellipse cx="80" cy="138" rx="34" ry="6" fill="#e9dcc6"/>
+            <path d="M80 24 C40 24 34 76 40 104 C45 128 64 134 80 134 C96 134 115 128 120 104 C126 76 120 24 80 24 Z"
+                  fill="#fffdf8" stroke="#cdb89a" stroke-width="2.5"/>
+            <circle cx="65" cy="86" r="3.6" fill="#6b5b48"/>
+            <circle cx="95" cy="86" r="3.6" fill="#6b5b48"/>
+            <path d="M72 96 q8 7 16 0" fill="none" stroke="#6b5b48" stroke-width="2.6" stroke-linecap="round"/>
+            <circle cx="56" cy="94" r="4.5" fill="#ffc9d6" opacity=".7"/>
+            <circle cx="104" cy="94" r="4.5" fill="#ffc9d6" opacity=".7"/>
+            <path d="M80 50 l4.5 9 10 1.4 -7.2 7 1.7 9.9 -9-4.7 -9 4.7 1.7-9.9 -7.2-7 10-1.4 z"
+                  fill="#ff9bb3" transform="translate(0,-6)"/>
+          </svg>
+          <span class="sm-greet">반가워요!</span>
+        </div>
+
+        <h1 class="ob-title sm-title">이 사랑, <span class="sm-em">통역</span>됩니다</h1>
+        <p class="ob-sub sm-sub">같은 말을 같은 뜻으로 듣지 못하는 순간,<br />
+          반려몽이 <b>마음을 살며시 통역</b>해 드려요.</p>
+
         <div class="ob-actions">
           <button class="btn btn--primary" data-action="go-bot">데모로 시작하기</button>
           <button class="btn btn--ghost" data-action="real-connect">실제 연동</button>
         </div>
-        <p class="ob-fineprint">가입 없이 바로 체험할 수 있어요.</p>
+        <p class="ob-fineprint">가입 없이 바로 체험할 수 있어요 ﹒ᵕ﹒</p>
       </section>
 
       <!-- STEP 1: 봇 발급 질문 -->

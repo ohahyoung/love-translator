@@ -336,3 +336,57 @@ body {
   .room { min-width: 220px; }
   .chat-head__hint { display: none; }
 }
+
+/* ========================================================= 
+   시안 B · 썸원 무드형 (design/b-sumone)
+   따뜻한 종이 질감 + 손그림 + 마스코트
+   ========================================================= */
+body {
+  background:
+    repeating-linear-gradient(0deg, rgba(180,150,110,.025) 0 2px, transparent 2px 4px),
+    radial-gradient(700px 400px at 50% -5%, #fbf3e4, transparent 60%),
+    #f3e9d6; /* 크림 종이 */
+}
+.onboarding { background: rgba(120,98,70,.22); }
+.onboarding__card {
+  background: #fffdf8; border-radius: 32px;
+  box-shadow: 0 26px 70px rgba(150,120,80,.26);
+  border: 1.5px solid #efe3cd;
+}
+.onboarding__card::before { background: linear-gradient(90deg, #ffc9a8, #ffb3c6, #c9b6f0); height: 5px; }
+
+.sm-doodles { position: absolute; inset: 0; pointer-events: none; }
+.sm-heart, .sm-spark { position: absolute; opacity: .55; }
+.sm-heart { color: #ff9bb3; }
+.sm-spark { color: #e3c98a; }
+.sm-heart--1 { left: 12%; top: 16%; font-size: 16px; animation: smFloat 5s ease-in-out infinite; }
+.sm-heart--2 { right: 14%; top: 12%; font-size: 22px; animation: smFloat 6s ease-in-out infinite .8s; }
+.sm-heart--3 { right: 20%; top: 30%; font-size: 13px; animation: smFloat 4.5s ease-in-out infinite .3s; }
+.sm-spark--1 { left: 18%; top: 32%; font-size: 14px; animation: smTwinkle 3s ease-in-out infinite; }
+.sm-spark--2 { right: 30%; top: 22%; font-size: 11px; animation: smTwinkle 2.4s ease-in-out infinite .6s; }
+@keyframes smFloat { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-9px) rotate(4deg); } }
+@keyframes smTwinkle { 0%,100% { opacity: .2; transform: scale(.8); } 50% { opacity: .7; transform: scale(1.1); } }
+
+.sm-mascot { position: relative; width: 150px; margin: 6px auto 4px; }
+.sm-mascot svg { width: 100%; display: block; animation: smBob 3.4s ease-in-out infinite; }
+@keyframes smBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.sm-greet {
+  position: absolute; top: 4px; right: -6px;
+  background: #fff; border: 1.5px solid #efd9b8; border-radius: 14px 14px 14px 4px;
+  padding: 4px 10px; font-family: var(--font-round); font-size: 12px; color: #b58a52;
+  box-shadow: 0 4px 10px rgba(150,120,80,.12);
+}
+
+.sm-title { font-family: var(--font-round); font-size: 30px; color: #5c4a36; letter-spacing: -.3px; margin-top: 8px; }
+.sm-em {
+  background: linear-gradient(100deg, #ff8fab, #c9a0f0);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.sm-sub { color: #8a7a62; font-family: var(--font-round); }
+.sm-sub b { color: #e07a98; font-weight: 400; border-bottom: 2px dotted #f3b9c8; }
+
+/* 버튼을 더 말랑하게 */
+.btn--primary { background: linear-gradient(100deg, #ffa9bd, #ff8aa6); box-shadow: 0 8px 18px rgba(255,138,166,.4); }
+.btn--ghost { background: #fff; color: #b58a52; border: 1.5px solid #efe3cd; box-shadow: none; }
+.btn--ghost:hover { color: #e07a98; border-color: #f3b9c8; }
+.ob-fineprint { color: #b8a585; font-family: var(--font-round); }
