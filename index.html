@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이 사랑 통역됩니다.</title>
+  <meta name="description" content="남녀 언어 해석 서비스 — 텔레그램 대화 속 애매한 말을 관계의 맥락으로 통역해 드려요." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ===================== 온보딩 오버레이 ===================== -->
+  <div id="onboarding" class="onboarding">
+    <div class="onboarding__card" data-step="intro">
+
+      <!-- STEP 0: 인트로 -->
+      <section class="ob-step ob-step--active" data-step="intro">
+        <div class="ob-logo">💌</div>
+        <h1 class="ob-title">이 사랑, <span class="grad">통역</span>됩니다.</h1>
+        <p class="ob-sub">같은 말을 같은 뜻으로 듣지 못하는 순간을 위해.<br />
+          외국어가 아니라 <b>관계의 맥락</b>을 통역해 드려요.</p>
+        <div class="ob-example">
+          <span class="ob-example__from">"됐어 오지마"</span>
+          <span class="ob-example__arrow">→</span>
+          <span class="ob-example__to">"사실은 와서 달래주길 바라는 걸 수도"</span>
+        </div>
+        <div class="ob-actions">
+          <button class="btn btn--primary" data-action="go-bot">데모로 시작하기</button>
+          <button class="btn btn--ghost" data-action="real-connect">실제 연동</button>
+        </div>
+        <p class="ob-fineprint">가입 없이 바로 체험할 수 있어요.</p>
+      </section>
+
+      <!-- STEP 1: 봇 발급 질문 -->
+      <section class="ob-step" data-step="bot">
+        <div class="ob-progress"><i></i><i></i><i></i></div>
+        <h2 class="ob-h2">사랑통역봇을 만들어요</h2>
+
+        <div class="ob-field">
+          <label class="ob-label">어떤 사이에 쓸 건가요?</label>
+          <div class="chip-row" data-group="relation">
+            <button class="chip" data-value="연인">연인</button>
+            <button class="chip" data-value="부부">부부</button>
+            <button class="chip" data-value="가족">가족</button>
+            <button class="chip" data-value="친구">친구</button>
+          </div>
+        </div>
+
+        <div class="ob-field">
+          <label class="ob-label">요즘 가장 자주 생기는 고민은?</label>
+          <div class="chip-row chip-row--wrap" data-group="worry">
+            <button class="chip" data-value="싸운 뒤 화해가 어렵다">싸운 뒤 화해가 어렵다</button>
+            <button class="chip" data-value="상대가 짧게 답하면 불안하다">짧게 답하면 불안하다</button>
+            <button class="chip" data-value="내가 뭘 잘못했는지 모르겠다">뭘 잘못했는지 모르겠다</button>
+            <button class="chip" data-value="답장을 어떻게 해야 할지 모르겠다">답장이 막막하다</button>
+          </div>
+          <input class="ob-input" data-group="worry-custom" type="text" placeholder="직접 입력 (선택)" />
+        </div>
+
+        <div class="ob-actions">
+          <button class="btn btn--primary" data-action="create-bot">사랑통역봇 발급</button>
+        </div>
+      </section>
+
+      <!-- STEP 2: 발급 완료 -->
+      <section class="ob-step" data-step="created">
+        <div class="ob-logo ob-logo--pop">🤖💕</div>
+        <h2 class="ob-h2">사랑통역봇이 생성되었습니다</h2>
+        <p class="ob-sub">이 봇을 텔레그램 대화방에 초대하면 통역이 시작돼요.</p>
+        <div class="bot-key">
+          <span class="bot-key__label">봇 키</span>
+          <code id="botKey">love-bot-7f3a-9c21</code>
+          <button class="bot-key__copy" data-action="copy-key" title="복사">복사</button>
+        </div>
+        <div class="ob-invite">
+          <div class="ob-invite__step"><b>1</b> 텔레그램에서 대화방을 열어요</div>
+          <div class="ob-invite__step"><b>2</b> 위 봇을 멤버로 초대해요</div>
+          <div class="ob-invite__step"><b>3</b> 마이페이지에 방이 자동으로 떠요</div>
+        </div>
+        <div class="ob-actions">
+          <button class="btn btn--primary" data-action="enter-app">연결된 방 보기</button>
+        </div>
+      </section>
+
+      <!-- STEP: 실제 연동 -->
+      <section class="ob-step" data-step="real">
+        <div class="ob-progress-back" data-action="back-intro">← 돌아가기</div>
+        <h2 class="ob-h2">실제 연동</h2>
+        <p class="ob-sub">사랑봇 키 또는 Telegram Bot Token을 입력하면 실제 방을 불러와요.<br />
+          <span class="muted">키가 없거나 실패하면 데모 프리셋으로 안전하게 동작합니다.</span></p>
+        <div class="ob-field">
+          <label class="ob-label">Telegram Bot Token</label>
+          <input class="ob-input" id="tokenInput" type="text" placeholder="123456:ABC-DEF..." />
+        </div>
+        <div class="ob-actions">
+          <button class="btn btn--primary" data-action="connect-real">연결 시도</button>
+          <button class="btn btn--ghost" data-action="go-bot">그냥 데모로 할래요</button>
+        </div>
+        <p class="ob-fineprint" id="realStatus"></p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ===================== 메인 앱 (3패널) ===================== -->
+  <main id="app" class="app" hidden>
+    <!-- 좌측 패널 -->
+    <aside class="panel panel--left">
+      <header class="brand">
+        <span class="brand__logo">💌</span>
+        <div>
+          <div class="brand__name">이 사랑 통역됩니다.</div>
+          <div class="brand__tag">남녀 언어 해석 서비스</div>
+        </div>
+      </header>
+
+      <div class="bot-status">
+        <span class="dot dot--on"></span>
+        <span class="bot-status__text">사랑통역봇 연결됨</span>
+        <button class="bot-status__reissue" data-action="reissue">재발급</button>
+      </div>
+
+      <div class="rooms__head">연결된 텔레그램 방</div>
+      <ul id="roomList" class="rooms"></ul>
+
+      <div class="left-foot">
+        <span class="muted">데모 모드 · 가상 대화</span>
+      </div>
+    </aside>
+
+    <!-- 중앙 패널 -->
+    <section class="panel panel--center">
+      <header class="chat-head">
+        <div class="chat-head__avatar" id="chatAvatar">🐰</div>
+        <div>
+          <div class="chat-head__name" id="chatName">우리 단둘이</div>
+          <div class="chat-head__meta" id="chatMeta">연인 · 봇 연결됨</div>
+        </div>
+        <div class="chat-head__hint">상대 말풍선의 <b>통역하기</b>를 눌러보세요</div>
+      </header>
+
+      <div id="chatBody" class="chat-body"></div>
+
+      <footer class="composer">
+        <input id="composerInput" class="composer__input" type="text" placeholder="답장을 입력하거나, 추천 답장을 골라보세요" />
+        <button id="composerSend" class="composer__send" data-action="send">전송</button>
+      </footer>
+    </section>
+
+    <!-- 우측 패널 -->
+    <aside class="panel panel--right">
+      <header class="trans-head">
+        <span>💡 통역 결과</span>
+        <label class="couple-toggle" title="이 커플의 대화 패턴을 반영해요">
+          <input type="checkbox" id="coupleMode" />
+          <span class="couple-toggle__track"><span class="couple-toggle__thumb"></span></span>
+          <span class="couple-toggle__label">우리 커플 모드</span>
+        </label>
+      </header>
+
+      <!-- 빈 상태 -->
+      <div id="transEmpty" class="trans-empty">
+        <div class="trans-empty__icon">🔍</div>
+        <p>통역할 메시지를 선택해 주세요.<br />
+          <span class="muted">상대 말풍선 옆 <b>통역하기</b> 버튼을 누르면 돼요.</span></p>
+      </div>
+
+      <!-- 결과 -->
+      <div id="transResult" class="trans-result" hidden>
+        <div class="trans-selected">
+          <span class="trans-selected__label">선택한 메시지</span>
+          <div class="trans-selected__bubble" id="selText"></div>
+        </div>
+
+        <div class="trans-card trans-card--inner">
+          <div class="trans-card__title">🫥 속마음 후보</div>
+          <ul id="innerThoughts" class="trans-list"></ul>
+        </div>
+
+        <div class="trans-card trans-card--want">
+          <div class="trans-card__title">🤍 원하는 반응</div>
+          <p id="wantedReaction" class="trans-text"></p>
+        </div>
+
+        <div class="trans-card trans-card--risk">
+          <div class="trans-card__title">⚠️ 위험한 답변</div>
+          <div class="trans-risk__reply" id="riskyReply"></div>
+          <p id="riskWhy" class="trans-text muted"></p>
+        </div>
+
+        <div class="trans-card trans-card--basis">
+          <div class="trans-card__title">🧭 왜 이렇게 봤을까요</div>
+          <ul id="basis" class="trans-list trans-list--basis"></ul>
+        </div>
+
+        <div class="trans-card trans-card--reply">
+          <div class="trans-card__title">💬 추천 답장</div>
+          <div id="replies" class="replies"></div>
+          <p class="trans-disclaimer">정답이 아니라 <b>가능성</b>이에요. 골라서 편집한 뒤 보내보세요.</p>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- 토스트 -->
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="presets.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
