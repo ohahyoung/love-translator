@@ -15,17 +15,33 @@
   <div id="onboarding" class="onboarding">
     <div class="onboarding__card" data-step="intro">
 
-      <!-- STEP 0: 인트로 -->
+      <!-- STEP 0: 인트로 (번역기 UI 컨셉) -->
       <section class="ob-step ob-step--active" data-step="intro">
-        <div class="ob-logo">💌</div>
+        <div class="ob-badge">💕 연애 통역기</div>
         <h1 class="ob-title">이 사랑, <span class="grad">통역</span>됩니다.</h1>
-        <p class="ob-sub">같은 말을 같은 뜻으로 듣지 못하는 순간을 위해.<br />
-          외국어가 아니라 <b>관계의 맥락</b>을 통역해 드려요.</p>
-        <div class="ob-example">
-          <span class="ob-example__from">"됐어 오지마"</span>
-          <span class="ob-example__arrow">→</span>
-          <span class="ob-example__to">"사실은 와서 달래주길 바라는 걸 수도"</span>
+        <p class="ob-sub">세상에서 가장 어려운 외국어는,<br />
+          <b>사랑하는 사람의 말</b>이니까요.</p>
+
+        <!-- 번역기 위젯 -->
+        <div class="tr">
+          <div class="tr__bar">
+            <span class="tr__lang tr__lang--m">♂ 남자어</span>
+            <button class="tr__swap" type="button" aria-label="언어 바꾸기">⇄</button>
+            <span class="tr__lang tr__lang--f">♀ 여자어</span>
+          </div>
+          <div class="tr__pane tr__pane--in">
+            <span class="tr__tag">들은 말</span>
+            <p class="tr__text">"됐어 오지마"</p>
+          </div>
+          <div class="tr__divider"><span>통역 중 ⋯</span></div>
+          <div class="tr__pane tr__pane--out">
+            <span class="tr__tag">진짜 속뜻</span>
+            <p class="tr__text tr__text--out">사실은 와서 달래줬으면 해 <i>♡</i></p>
+          </div>
         </div>
+
+        <p class="ob-note">파파고는 있는데, <b>그 사람 말</b>은 왜 안 통할까요?</p>
+
         <div class="ob-actions">
           <button class="btn btn--primary" data-action="go-bot">데모로 시작하기</button>
           <button class="btn btn--ghost" data-action="real-connect">실제 연동</button>

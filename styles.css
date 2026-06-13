@@ -336,3 +336,56 @@ body {
   .room { min-width: 220px; }
   .chat-head__hint { display: none; }
 }
+
+/* ========================================================= 
+   컨셉 · 번역기 UI 히어로 (concept/translator-hero)
+   ========================================================= */
+.ob-badge {
+  display: inline-block; margin: 0 auto 14px; padding: 6px 14px;
+  background: linear-gradient(100deg, var(--rose-soft), var(--lav-soft));
+  color: var(--rose-deep); font-size: 12.5px; font-weight: 700; border-radius: 999px;
+  border: 1px solid #fbd6e3; text-align: center;
+}
+.ob-step[data-step="intro"] { text-align: center; }
+.ob-step[data-step="intro"] .ob-actions { text-align: left; }
+
+/* 번역기 위젯 */
+.tr {
+  text-align: left; margin: 22px 0 14px; border-radius: var(--radius);
+  border: 1.5px solid var(--line); background: #fff; overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.tr__bar {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px;
+  padding: 11px 14px; background: #faf6f9; border-bottom: 1px solid var(--line);
+}
+.tr__lang { font-size: 13.5px; font-weight: 700; text-align: center; }
+.tr__lang--m { color: #3f6f9e; }
+.tr__lang--f { color: var(--rose-deep); }
+.tr__swap {
+  width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--line);
+  background: #fff; color: var(--ink-soft); cursor: pointer; font-size: 14px;
+  transition: transform .3s, color .2s, border-color .2s;
+}
+.tr__swap:hover { transform: rotate(180deg); color: var(--rose-deep); border-color: var(--rose); }
+
+.tr__pane { padding: 14px 16px; }
+.tr__tag { font-size: 11px; font-weight: 700; letter-spacing: .3px; color: var(--ink-faint); }
+.tr__text { font-size: 17px; font-weight: 600; margin-top: 5px; }
+.tr__pane--in .tr__text { color: var(--ink); }
+.tr__pane--out { background: linear-gradient(120deg, #fff, #fff7fa); }
+.tr__text--out { color: var(--rose-deep); }
+.tr__text--out i { font-style: normal; animation: trBeat 1.6s ease-in-out infinite; display: inline-block; }
+@keyframes trBeat { 0%,100% { transform: scale(1);} 50% { transform: scale(1.25);} }
+
+.tr__divider {
+  position: relative; text-align: center; height: 0; margin: 0 16px;
+  border-top: 1.5px dashed #efdbe6;
+}
+.tr__divider span {
+  position: relative; top: -9px; background: #fff; padding: 0 10px;
+  font-size: 11px; color: var(--lavender); font-weight: 600;
+}
+
+.ob-note { text-align: center; font-size: 13px; color: var(--ink-soft); margin-bottom: 4px; }
+.ob-note b { color: #3f6f9e; }
