@@ -336,3 +336,56 @@ body {
   .room { min-width: 220px; }
   .chat-head__hint { display: none; }
 }
+
+/* ========================================================= 
+   시안 C · 하이브리드 (design/c-hybrid)
+   썸원 따뜻함 + 화성/금성 두 화자 통역 컨셉
+   ========================================================= */
+body {
+  background:
+    repeating-linear-gradient(0deg, rgba(180,150,110,.022) 0 2px, transparent 2px 4px),
+    radial-gradient(700px 380px at 18% 0%, #eaf1fa, transparent 60%),
+    radial-gradient(700px 380px at 82% 0%, #fde9ef, transparent 60%),
+    #f4ebda;
+}
+.onboarding { background: rgba(120,98,70,.22); }
+.onboarding__card {
+  background: #fffdf8; border-radius: 30px;
+  box-shadow: 0 26px 70px rgba(150,120,80,.26); border: 1.5px solid #efe3cd;
+}
+.onboarding__card::before { background: linear-gradient(90deg, #8fb6df, #ffb3c6); height: 5px; }
+
+.hy-doodles { position: absolute; inset: 0; pointer-events: none; }
+.hy-heart, .hy-spark { position: absolute; opacity: .5; }
+.hy-heart { color: #ff9bb3; }
+.hy-spark { color: #9bb9dd; }
+.hy-heart--1 { left: 11%; top: 30%; font-size: 15px; animation: hyFloat 5s ease-in-out infinite; }
+.hy-heart--2 { right: 12%; top: 24%; font-size: 19px; animation: hyFloat 6s ease-in-out infinite .7s; }
+.hy-spark { left: 16%; top: 18%; font-size: 13px; animation: hyTwinkle 3s ease-in-out infinite; }
+@keyframes hyFloat { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-8px) rotate(4deg); } }
+@keyframes hyTwinkle { 0%,100% { opacity:.2; transform: scale(.8);} 50% { opacity:.6; transform: scale(1.1);} }
+
+.hy-kicker { text-align: center; font-size: 12.5px; letter-spacing: 1px; color: #a89576; font-family: var(--font-round); margin-bottom: 8px; }
+
+.hy-stage { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 4px; margin: 4px auto 16px; max-width: 470px; }
+.hy-mong { width: 100%; max-width: 104px; }
+.hy-mong--m { justify-self: end; animation: hyBob 3.6s ease-in-out infinite; }
+.hy-mong--f { justify-self: start; animation: hyBob 3.6s ease-in-out infinite .8s; }
+@keyframes hyBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+.hy-bubbles { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.hy-bubble { font-size: 12.5px; line-height: 1.35; text-align: center; padding: 8px 13px; border-radius: 14px; white-space: nowrap; font-family: var(--font-round); }
+.hy-bubble--said { background: #eaf1fa; border: 1.5px solid #c3d8ef; color: #43688f; }
+.hy-trans-label { font-size: 10.5px; color: #c0a878; letter-spacing: .5px; }
+.hy-bubble--mean { background: #fff; border: 1.5px dashed #f0aac0; color: #d96a8c; white-space: normal; box-shadow: 0 6px 16px rgba(217,106,140,.16); animation: hyPop 3s ease-in-out infinite; }
+@keyframes hyPop { 0%,100% { transform: scale(1);} 50% { transform: scale(1.05);} }
+
+.hy-title { font-family: var(--font-round); font-size: 30px; color: #5c4a36; }
+.hy-em { background: linear-gradient(100deg, #7ba3cc, #e58aa6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hy-sub { color: #8a7a62; font-family: var(--font-round); }
+.hy-sub b { color: #d96a8c; font-weight: 400; border-bottom: 2px dotted #f0aac0; }
+
+.btn--primary { background: linear-gradient(100deg, #ffa9bd, #ff8aa6); box-shadow: 0 8px 18px rgba(255,138,166,.4); }
+.btn--ghost { background: #fff; color: #7ba3cc; border: 1.5px solid #d3e0ef; box-shadow: none; }
+.btn--ghost:hover { color: #d96a8c; border-color: #f0aac0; }
+.ob-fineprint { color: #b8a585; font-family: var(--font-round); }
