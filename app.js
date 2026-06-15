@@ -31,7 +31,10 @@ $$(".chip-row").forEach((row) => {
     chip.classList.add("is-active");
     const group = row.dataset.group;
     if (group === "relation") state.botSetup.relation = chip.dataset.value;
-    if (group === "worry") state.botSetup.worry = chip.dataset.value;
+    if (group === "worry") {
+      state.botSetup.worry = chip.dataset.value;
+      state.botSetup.worryLabel = chip.textContent.trim();
+    }
   });
 });
 
@@ -48,6 +51,15 @@ document.addEventListener("click", (e) => {
 
     case "create-bot": {
       if (!state.botSetup.relation) { toast("어떤 사이인지 먼저 골라주세요 🙂"); return; }
+      // Q2도 필수: 칩 선택 또는 직접 입력 중 하나
+      const custom = ($('[data-group="worry-custom"]').value || "").trim();
+      const worryLabel = custom || state.botSetup.worryLabel;
+      if (!worryLabel) { toast("요즘 가장 자주 생기는 고민도 하나 골라주세요 🙂"); return; }
+      state.botSetup.worryLabel = worryLabel;
+      if (custom) state.botSetup.worry = custom;
+      // 발급 완료 화면에서 고민을 되돌려줌 (투자 → 보상)
+      $("#botPersonalWorry").textContent = `“${worryLabel}”`;
+      $("#botPersonal").hidden = false;
       showStep("created");
       break;
     }

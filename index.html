@@ -49,7 +49,6 @@
 
       <!-- STEP 1: 봇 발급 질문 -->
       <section class="ob-step" data-step="bot">
-        <div class="ob-progress"><i></i><i></i><i></i></div>
         <h2 class="ob-h2">사랑통역봇을 만들어요</h2>
 
         <div class="ob-field">
@@ -69,7 +68,7 @@
             <button class="chip" data-value="내가 뭘 잘못했는지 모르겠다">뭘 잘못했는지 모르겠어요</button>
             <button class="chip" data-value="톡으로 사소한 말에도 자꾸 오해가 생긴다">자꾸 오해가 생겨요</button>
           </div>
-          <input class="ob-input" data-group="worry-custom" type="text" placeholder="직접 입력 (선택)" />
+          <input class="ob-input" data-group="worry-custom" type="text" placeholder="또는 직접 입력하기" />
         </div>
 
         <div class="ob-actions">
@@ -82,6 +81,10 @@
         <div class="ob-logo ob-logo--pop">🤖💕</div>
         <h2 class="ob-h2">사랑통역봇이 생성되었습니다</h2>
         <p class="ob-sub">이 봇을 텔레그램 대화방에 초대하면 통역이 시작돼요.</p>
+        <div class="ob-personal" id="botPersonal" hidden>
+          <span class="ob-personal__tag">이런 마음, 함께 통역할게요</span>
+          <span class="ob-personal__worry" id="botPersonalWorry"></span>
+        </div>
         <div class="bot-key">
           <span class="bot-key__label">봇 키</span>
           <code id="botKey">love-bot-7f3a-9c21</code>
