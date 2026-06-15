@@ -274,7 +274,7 @@ function renderTranslation(message) {
     repliesBox.appendChild(b);
   });
 
-  if (d.usedCouple) toast("우리 커플 모드로 해석했어요 💞");
+  if (d.usedCouple) toast("우리 커플 모드로 통역했어요 💞");
 }
 
 function fillList(ul, items) {
@@ -313,7 +313,7 @@ function sendReply() {
 
   input.value = "";
   input.classList.remove("is-filled");
-  toast("텔레그램으로 전송되었어요 ✈️");
+  toast("텔레그램으로 보냈어요 ✈️");
 }
 
 function nowTime() {
