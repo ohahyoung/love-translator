@@ -389,3 +389,9 @@ body {
 
 .ob-note { text-align: center; font-size: 13px; color: var(--ink-soft); margin-bottom: 4px; }
 .ob-note b { color: #3f6f9e; }
+
+/* 타이핑 연출: 레이아웃 흔들림 방지 + 입력칸 커서 */
+.tr__text { min-height: 1.4em; }
+.tr__text--out { min-height: 1.4em; }
+.tr__pane--in .tr__text::after { content: "▏"; color: var(--rose); animation: trCaret 1s steps(1) infinite; margin-left: 1px; }
+@keyframes trCaret { 50% { opacity: 0; } }
