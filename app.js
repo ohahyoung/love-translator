@@ -66,7 +66,7 @@ document.addEventListener("click", (e) => {
     case "copy-key": {
       const key = $("#botKey").textContent;
       navigator.clipboard?.writeText(key).catch(() => {});
-      toast("봇 키를 복사했어요 📋");
+      toast("봇 아이디를 복사했어요 📋");
       break;
     }
     case "enter-app": enterApp(); break;
