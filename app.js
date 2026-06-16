@@ -121,10 +121,10 @@ function renderRooms() {
     li.className = "room" + (room.id === state.activeRoomId ? " is-active" : "");
     li.dataset.roomId = room.id;
     li.innerHTML = `
-      <div class="room__avatar">${room.name.match(/\p{Emoji}/u)?.[0] || "💬"}</div>
+      <div class="room__avatar">${avatarInner(room)}</div>
       <div class="room__body">
         <div class="room__top">
-          <span class="room__name">${stripEmoji(room.name)}</span>
+          <span class="room__name">${displayName(room)}</span>
           <span class="room__time">${room.lastTime || ""}</span>
         </div>
         <div class="room__last">${room.lastMessage}</div>
@@ -135,6 +135,15 @@ function renderRooms() {
 }
 
 function stripEmoji(s) { return s.replace(/\p{Emoji}/gu, "").trim(); }
+
+// 아바타: 이미지가 있으면 img, 없으면 이름 속 이모지
+function avatarInner(room) {
+  return room.avatar
+    ? `<img class="avatar-img" src="${room.avatar}" alt="">`
+    : (room.name.match(/\p{Emoji}/u)?.[0] || "💬");
+}
+// 표시 이름: 이미지 아바타가 있으면 이름 그대로(❤️ 포함), 없으면 이모지 제거
+function displayName(room) { return room.avatar ? room.name : stripEmoji(room.name); }
 
 function getRoom(id) { return PRESETS.rooms.find((r) => r.id === id); }
 
@@ -147,8 +156,8 @@ function selectRoom(id) {
 
   $$(".room").forEach((el) => el.classList.toggle("is-active", el.dataset.roomId === id));
 
-  $("#chatAvatar").textContent = room.name.match(/\p{Emoji}/u)?.[0] || "💬";
-  $("#chatName").textContent = stripEmoji(room.name);
+  $("#chatAvatar").innerHTML = avatarInner(room);
+  $("#chatName").textContent = displayName(room);
   $("#chatMeta").textContent = `${room.relationship} · 봇 연결됨`;
 
   renderChat(room);
@@ -166,7 +175,7 @@ function renderChat(room) {
   datePill.innerHTML = "<span>오늘</span>";
   body.appendChild(datePill);
 
-  const avatarEmoji = room.name.match(/\p{Emoji}/u)?.[0] || "💬";
+  const avatarHTML = avatarInner(room);
   let prevFrom = null;
 
   room.messages.forEach((m, i) => {
@@ -183,7 +192,7 @@ function renderChat(room) {
     if (m.from === "them") {
       const av = document.createElement("div");
       av.className = "row__avatar";
-      if (groupEnd) av.textContent = avatarEmoji;
+      if (groupEnd) av.innerHTML = avatarHTML;
       row.appendChild(av);
     }
 

@@ -1,0 +1,22 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" fill="#f2f0eb"/>
+  <!-- ears -->
+  <ellipse cx="39" cy="26" rx="6.5" ry="12" fill="#fff" stroke="#3b3b3b" stroke-width="3"/>
+  <ellipse cx="61" cy="26" rx="6.5" ry="12" fill="#fff" stroke="#3b3b3b" stroke-width="3"/>
+  <ellipse cx="39" cy="27" rx="2.6" ry="6" fill="#ffc2cf"/>
+  <ellipse cx="61" cy="27" rx="2.6" ry="6" fill="#ffc2cf"/>
+  <!-- head / body blob -->
+  <path d="M50 30 C30 30 24 48 25.5 62 C27 79 39 86 50 86 C61 86 73 79 74.5 62 C76 48 70 30 50 30 Z"
+        fill="#fff" stroke="#3b3b3b" stroke-width="3"/>
+  <!-- paws raised -->
+  <path d="M30 60 q-7 1 -8 8 q6 3 11 -2 z" fill="#fff" stroke="#3b3b3b" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M70 60 q7 1 8 8 q-6 3 -11 -2 z" fill="#fff" stroke="#3b3b3b" stroke-width="3" stroke-linejoin="round"/>
+  <!-- cheeks -->
+  <ellipse cx="37" cy="60" rx="6" ry="4" fill="#ffabbe"/>
+  <ellipse cx="63" cy="60" rx="6" ry="4" fill="#ffabbe"/>
+  <!-- eyes -->
+  <circle cx="43" cy="53" r="3.1" fill="#3b3b3b"/>
+  <circle cx="57" cy="53" r="3.1" fill="#3b3b3b"/>
+  <!-- mouth -->
+  <path d="M45 60 q5 6 10 0" fill="none" stroke="#3b3b3b" stroke-width="2.6" stroke-linecap="round"/>
+</svg>

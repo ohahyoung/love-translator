@@ -471,3 +471,7 @@ body {
 }
 .translate-btn:hover { background: var(--rose); color: #fff; transform: translateY(-1px); }
 .translate-btn.is-done { background: var(--rose-soft); border-color: var(--rose-soft); color: var(--rose-deep); }
+
+/* 이미지 프로필 아바타 (방 목록 / 채팅 헤더 / 말풍선 옆) */
+.avatar-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+.row__avatar .avatar-img { width: 26px; height: 26px; }
