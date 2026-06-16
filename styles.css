@@ -516,3 +516,28 @@ body {
 .bubble--typing span:nth-child(2) { animation-delay: .18s; }
 .bubble--typing span:nth-child(3) { animation-delay: .36s; }
 @keyframes typingDot { 0%, 60%, 100% { transform: translateY(0); opacity: .45; } 30% { transform: translateY(-4px); opacity: 1; } }
+
+/* ========================================================= 
+   통역 결과 패널 재구성 — 핵심(진짜 속뜻) 먼저, 상세는 접기
+   ========================================================= */
+.trans-core {
+  background: linear-gradient(135deg, #fff0f6, #efeaff);
+  border: 1.5px solid #ffd3e4; border-radius: var(--radius);
+  padding: 16px 17px; box-shadow: var(--shadow-sm);
+}
+.trans-core__label { font-size: 12px; font-weight: 800; color: var(--rose-deep); letter-spacing: .3px; margin-bottom: 9px; }
+.trans-core__list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.trans-core__list li {
+  font-size: 15.5px; font-weight: 600; line-height: 1.55; color: var(--ink);
+  position: relative; padding-left: 20px;
+}
+.trans-core__list li::before { content: "💗"; position: absolute; left: 0; top: 2px; font-size: 12px; }
+
+/* 자세히 보기 토글 */
+.trans-more {
+  align-self: center; border: 0; background: none; cursor: pointer;
+  color: var(--ink-soft); font-family: var(--font); font-size: 13px; padding: 4px 8px;
+}
+.trans-more:hover { color: var(--rose-deep); }
+.trans-detail { display: flex; flex-direction: column; gap: 12px; }
+.trans-detail[hidden] { display: none; }

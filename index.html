@@ -189,33 +189,37 @@
           <div class="trans-selected__bubble" id="selText"></div>
         </div>
 
-        <div class="trans-arrow"><span>통역하면 ↓</span></div>
-
-        <div class="trans-card trans-card--inner">
-          <div class="trans-card__title">🫥 속마음 후보 <em>진짜 속뜻</em></div>
-          <ul id="innerThoughts" class="trans-list"></ul>
+        <!-- 핵심: 진짜 속뜻 -->
+        <div class="trans-core">
+          <div class="trans-core__label">💗 진짜 속뜻은</div>
+          <ul id="innerThoughts" class="trans-core__list"></ul>
         </div>
 
-        <div class="trans-card trans-card--want">
-          <div class="trans-card__title">🤍 원하는 반응</div>
-          <p id="wantedReaction" class="trans-text"></p>
-        </div>
-
-        <div class="trans-card trans-card--risk">
-          <div class="trans-card__title">⚠️ 위험한 답변</div>
-          <div class="trans-risk__reply" id="riskyReply"></div>
-          <p id="riskWhy" class="trans-text muted"></p>
-        </div>
-
-        <div class="trans-card trans-card--basis">
-          <div class="trans-card__title">🧭 왜 이렇게 봤을까요</div>
-          <ul id="basis" class="trans-list trans-list--basis"></ul>
-        </div>
-
+        <!-- 추천 답장 (바로 액션) -->
         <div class="trans-card trans-card--reply">
-          <div class="trans-card__title">💬 추천 답장</div>
+          <div class="trans-card__title">💬 이렇게 답해보세요</div>
           <div id="replies" class="replies"></div>
           <p class="trans-disclaimer">정답이 아니라 <b>가능성</b>이에요. 골라서 편집한 뒤 보내보세요.</p>
+        </div>
+
+        <!-- 자세히 (접기) -->
+        <button class="trans-more" data-action="toggle-detail" aria-expanded="false">왜 그런지 자세히 보기 ▾</button>
+        <div class="trans-detail" id="transDetail" hidden>
+          <div class="trans-card trans-card--want">
+            <div class="trans-card__title">🤍 원하는 반응</div>
+            <p id="wantedReaction" class="trans-text"></p>
+          </div>
+
+          <div class="trans-card trans-card--risk">
+            <div class="trans-card__title">⚠️ 이렇게 답하면 위험해요</div>
+            <div class="trans-risk__reply" id="riskyReply"></div>
+            <p id="riskWhy" class="trans-text muted"></p>
+          </div>
+
+          <div class="trans-card trans-card--basis">
+            <div class="trans-card__title">🧭 왜 이렇게 봤을까요</div>
+            <ul id="basis" class="trans-list trans-list--basis"></ul>
+          </div>
         </div>
       </div>
     </aside>

@@ -49,6 +49,15 @@ document.addEventListener("click", (e) => {
     case "real-connect": showStep("real"); break;
     case "back-intro": showStep("intro"); break;
 
+    case "toggle-detail": {
+      const detail = $("#transDetail");
+      const willOpen = detail.hidden;
+      detail.hidden = !willOpen;
+      btn.setAttribute("aria-expanded", String(willOpen));
+      btn.textContent = willOpen ? "간단히 보기 ▴" : "왜 그런지 자세히 보기 ▾";
+      break;
+    }
+
     case "create-bot": {
       if (!state.botSetup.relation) { toast("어떤 사이인지 먼저 골라주세요 🙂"); return; }
       // Q2도 필수: 칩 선택 또는 직접 입력 중 하나
@@ -466,6 +475,11 @@ function renderTranslation(message) {
   $("#transEmpty").innerHTML = `<div class="trans-empty__icon">🔍</div><p>통역할 말을 선택해 주세요.<br><span class="muted">상대 말풍선 옆 <b>통역하기</b> 버튼을 누르면 돼요.</span></p>`;
   const result = $("#transResult");
   result.hidden = false;
+
+  // 새 통역마다 상세는 접힌 상태로 시작
+  $("#transDetail").hidden = true;
+  const moreBtn = $(".trans-more");
+  if (moreBtn) { moreBtn.setAttribute("aria-expanded", "false"); moreBtn.textContent = "왜 그런지 자세히 보기 ▾"; }
 
   $("#selText").textContent = message.text;
   fillList($("#innerThoughts"), d.innerThoughts);
