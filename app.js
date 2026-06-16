@@ -177,6 +177,8 @@ function selectRoom(id) {
   state.activeRoomId = id;
   state.selectedMessage = null;
   const room = getRoom(id);
+  if (room._baseTemp == null) room._baseTemp = room.temperature; // 최초 온도 기억(재시작 시 복원)
+  room.temperature = room._baseTemp;
   state.coupleMode = room.coupleMode;
   $("#coupleMode").checked = room.coupleMode;
 
@@ -186,9 +188,93 @@ function selectRoom(id) {
   $("#chatName").textContent = displayName(room);
   $("#chatMeta").textContent = `${room.relationship} · 봇 연결됨`;
   updateTempUI(room);
-
-  renderChat(room);
   resetTranslation();
+
+  if (room.script) startScenario(room);
+  else renderChat(room);
+}
+
+/* ---------------- 가이드 시나리오 엔진 ---------------- */
+const delay = (ms) => new Promise((r) => setTimeout(r, ms));
+function highlightActive() {
+  $$(".room").forEach((el) => el.classList.toggle("is-active", el.dataset.roomId === state.activeRoomId));
+}
+
+function startScenario(room) {
+  state.scenarioGen = (state.scenarioGen || 0) + 1;
+  room.messages = [];
+  room._segIndex = 0;
+  room._awaiting = false;
+  state.revealing = false;
+  renderChat(room);
+  revealSegment(room, 0, state.scenarioGen);
+}
+
+// 한 세그먼트를 한 줄씩 등장(상대 메시지는 타이핑 인디케이터 후) → 끝나면 답장 대기
+async function revealSegment(room, idx, gen) {
+  const seg = room.script && room.script[idx];
+  if (!seg) return;
+  state.revealing = true;
+  room._awaiting = false;
+  for (const m of seg) {
+    if (gen !== state.scenarioGen) return; // 새 시나리오로 교체됨 → 중단
+    if (m.sep) {
+      room.messages.push({ sep: m.sep });
+      renderChat(room);
+      await delay(450);
+      continue;
+    }
+    if (m.from === "them") {
+      room.messages.push({ id: "typing", from: "them", typing: true });
+      renderChat(room);
+      await delay(850);
+      if (gen !== state.scenarioGen) return;
+      room.messages = room.messages.filter((x) => !x.typing);
+    }
+    room.messages.push({ ...m, id: "m" + idx + "_" + room.messages.length });
+    if (m.text) { room.lastMessage = m.text; room._clock = m.time || room._clock; }
+    renderChat(room);
+    renderRooms();
+    highlightActive();
+    await delay(m.from === "them" ? 350 : 480);
+  }
+  if (gen !== state.scenarioGen) return;
+  state.revealing = false;
+  room._awaiting = true; // 체크포인트(마지막 상대 메시지) 답장 대기
+}
+
+// 보낸 답장 → 다음 세그먼트 진행 (또는 마지막이면 outcome 분기)
+function advanceScenario(room, sentText) {
+  if (!room._awaiting) return;
+  room._awaiting = false;
+  const checkpoint = [...room.messages].reverse().find((m) => m.from === "them" && !m.typing);
+  if (checkpoint && checkpoint.outcome && !checkpoint._resolved) {
+    checkpoint._resolved = true;
+    triggerOutcome(room, checkpoint, sentText);
+    return;
+  }
+  room._segIndex++;
+  revealSegment(room, room._segIndex, state.scenarioGen);
+}
+
+// 마지막 분기: 추천 답장이면 풀림+온도↑, 위험한 답변이면 식음+온도↓
+function triggerOutcome(room, checkpoint, sentText) {
+  const risky = ((checkpoint._data && checkpoint._data.riskyReply) || "").trim();
+  const isBad = risky && sentText.trim() === risky;
+  const branch = isBad ? checkpoint.outcome.bad : checkpoint.outcome.good;
+  state.revealing = true;
+  room.messages.push({ id: "typing", from: "them", typing: true });
+  renderChat(room);
+  setTimeout(() => {
+    room.messages = room.messages.filter((m) => !m.typing);
+    room.messages.push({ id: "out" + room.messages.length, from: "them", text: branch.reply, time: room._clock || "" });
+    room.lastMessage = branch.reply;
+    renderChat(room);
+    renderRooms();
+    highlightActive();
+    state.revealing = false;
+    animateTemperature(room, branch.temp, isBad);
+  }, 1600);
 }
 
 /* ---------------- 중앙: 채팅 ---------------- */
@@ -206,6 +292,15 @@ function renderChat(room) {
   let prevFrom = null;
 
   room.messages.forEach((m, i) => {
+    // 중간 날짜/시간 구분선
+    if (m.sep) {
+      const d = document.createElement("div");
+      d.className = "chat-date";
+      d.innerHTML = `<span>${m.sep}</span>`;
+      body.appendChild(d);
+      prevFrom = null;
+      return;
+    }
     // 타이핑 인디케이터 (상대가 입력 중)
     if (m.typing) {
       const row = document.createElement("div");
@@ -407,48 +502,21 @@ function sendReply() {
   const input = $("#composerInput");
   const text = input.value.trim();
   if (!text) { toast("보낼 답장을 입력해 주세요 🙂"); return; }
+  if (state.revealing) { toast("앨리가 입력 중이에요 🐰"); return; }
 
   const room = getRoom(state.activeRoomId);
-  const msg = { id: "sent-" + room.messages.length, from: "me", name: "나", text, time: nowTime() };
+  const msg = { id: "sent-" + room.messages.length, from: "me", text, time: room._clock || nowTime() };
   room.messages.push(msg);
   room.lastMessage = text;
   renderChat(room);
   renderRooms();
-  $$(".room").forEach((el) => el.classList.toggle("is-active", el.dataset.roomId === state.activeRoomId));
+  highlightActive();
 
   input.value = "";
   input.classList.remove("is-filled");
   toast("텔레그램으로 보냈어요 ✈️");
 
-  maybeTriggerOutcome(room, text);
-}
-
-/* ---------------- 동적 분기: 보낸 답장 → 상대 반응 + 대화온도 ---------------- */
-function maybeTriggerOutcome(room, sentText) {
-  const sel = state.selectedMessage;
-  if (!sel || !sel.outcome || sel._resolved) return;
-  // 방금 통역한 그 메시지가 방의 마지막 '상대' 메시지인지(=거기에 답한 것인지) 확인
-  const lastThem = [...room.messages].reverse().find((m) => m.from === "them" && !m.typing);
-  if (!lastThem || lastThem.id !== sel.id) return;
-
-  sel._resolved = true;
-  const risky = (sel._data && sel._data.riskyReply || "").trim();
-  const isBad = risky && sentText.trim() === risky;
-  const branch = isBad ? sel.outcome.bad : sel.outcome.good;
-
-  // 상대가 입력 중… (타이핑 인디케이터)
-  room.messages.push({ id: "typing", from: "them", typing: true });
-  renderChat(room);
-
-  setTimeout(() => {
-    room.messages = room.messages.filter((m) => m.id !== "typing");
-    room.messages.push({ id: "out-" + room.messages.length, from: "them", text: branch.reply, time: nowTime() });
-    room.lastMessage = branch.reply;
-    renderChat(room);
-    renderRooms();
-    $$(".room").forEach((el) => el.classList.toggle("is-active", el.dataset.roomId === state.activeRoomId));
-    animateTemperature(room, branch.temp, isBad);
-  }, 1500);
+  advanceScenario(room, text);
 }
 
 // 대화온도를 목표값까지 부드럽게 애니메이션 + 결과 토스트
@@ -457,13 +525,13 @@ function animateTemperature(room, target, isBad) {
   if (start == null) return;
   const up = target > start;
   const tick = () => {
-    room.temperature += up ? 2 : -2;
+    room.temperature += up ? 3 : -3;
     if ((up && room.temperature >= target) || (!up && room.temperature <= target)) {
       room.temperature = target;
     }
     updateTempUI(room);
     if (room.temperature !== target) {
-      setTimeout(tick, 45);
+      setTimeout(tick, 60);
     } else {
       toast(isBad
         ? `앗, 대화가 더 식었어요 ${start}° → ${target}° ❄️`

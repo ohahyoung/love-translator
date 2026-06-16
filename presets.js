@@ -19,31 +19,43 @@ const PRESETS = {
       avatar: "assets/ellie.svg", // 프로필 썸네일 (사용자 첨부 이미지로 교체 가능)
       relationship: "연인",
       temperature: 14, // 대화온도(°) — 낮을수록 위험
-      lastMessage: "아냐 화 안났어",
-      lastTime: "20:10",
+      lastMessage: "나 아무거나!",
+      lastTime: "13:20",
       connected: true,
       coupleMode: false,
-      messages: [
-        { id: "m1", from: "them", text: "자기 오늘 뭐 먹을까?", time: "13:18" },
-        { id: "m2", from: "me", text: "내 사랑 뭐 먹고 싶어?", time: "13:20" },
-        { id: "m3", from: "them", text: "나 아무거나!", time: "13:20", canTranslate: true },
-        { id: "m4", from: "me", text: "그럼 이따 봐요~", time: "13:21" },
-        { id: "m5", from: "them", text: "자기 나 도착했어~ 어디쯤이야?", time: "19:58" },
-        { id: "m6", from: "me", text: "헐 미안ㅠㅠ 나 아직 회사야… 일이 안 끝나서", time: "20:01" },
-        { id: "m7", from: "them", text: "잉? 우리 8시 약속이잖아", time: "20:01" },
-        { id: "m8", from: "me", text: "미안해 30분만 더 하면 갈 수 있을 거 같아", time: "20:02" },
-        { id: "m9", from: "them", text: "아.. 알겠어 천천히 와", time: "20:03", canTranslate: true },
-        { id: "m10", from: "me", text: "금방 갈게! 카페에서 기다려줄래?", time: "20:04" },
-        { id: "m11", from: "them", text: "아니야 밖에서 기다릴게", time: "20:06", canTranslate: true },
-        { id: "m12", from: "me", text: "화났어..?", time: "20:09", read: true },
-        {
-          id: "m13", from: "them", text: "아냐 화 안났어", time: "20:10", canTranslate: true, highlight: true,
-          // 동적 분기: 보낸 답장에 따라 앨리의 반응과 대화온도가 달라짐
-          outcome: {
-            good: { reply: "사실 조금 서운했어ㅠ 근데 그렇게 말해주니까 마음 풀렸어… 조심히 와🥺", temp: 36 },
-            bad: { reply: "…응. 천천히 와.", temp: 8 },
+      /*
+       * 가이드 시나리오: 세그먼트 단위로 한 줄씩 등장한다.
+       * 각 세그먼트의 마지막(canTranslate) 메시지에서 멈춰, 사용자가
+       * 통역→답장을 보내면 다음 세그먼트가 이어진다. 마지막은 outcome 분기.
+       */
+      script: [
+        [
+          { from: "them", text: "자기 오늘 뭐 먹을까?", time: "13:18" },
+          { from: "me", text: "내 사랑 뭐 먹고 싶어?", time: "13:19" },
+          { from: "them", text: "나 아무거나!", time: "13:20", canTranslate: true },
+        ],
+        [
+          { sep: "저녁 7시 58분" },
+          { from: "them", text: "자기 나 도착했어~ 어디쯤이야?", time: "19:58" },
+          { from: "me", text: "헐 미안ㅠㅠ 나 아직 회사야… 일이 안 끝나서", time: "20:01" },
+          { from: "them", text: "잉? 우리 8시 약속이잖아", time: "20:01" },
+          { from: "me", text: "미안해 30분만 더 하면 갈 수 있을 거 같아", time: "20:02" },
+          { from: "them", text: "아.. 알겠어 천천히 와", time: "20:03", canTranslate: true },
+        ],
+        [
+          { from: "me", text: "금방 갈게! 카페에서 기다려줄래?", time: "20:04" },
+          { from: "them", text: "아니야 밖에서 기다릴게", time: "20:06", canTranslate: true },
+        ],
+        [
+          { from: "me", text: "화났어..?", time: "20:09" },
+          {
+            from: "them", text: "아냐 화 안났어", time: "20:10", canTranslate: true, highlight: true,
+            outcome: {
+              good: { reply: "사실 조금 서운했어ㅠ 근데 그렇게 말해주니까 마음 풀렸어… 조심히 와🥺", temp: 36 },
+              bad: { reply: "…응. 천천히 와.", temp: 8 },
+            },
           },
-        },
+        ],
       ],
     },
   ],
