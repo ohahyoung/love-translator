@@ -121,7 +121,7 @@ function renderRooms() {
     li.className = "room" + (room.id === state.activeRoomId ? " is-active" : "");
     li.dataset.roomId = room.id;
     li.innerHTML = `
-      <div class="room__avatar">${avatarInner(room)}</div>
+      <div class="room__avatar">${avatarInner(room)}${tempBadge(room)}</div>
       <div class="room__body">
         <div class="room__top">
           <span class="room__name">${displayName(room)}</span>
@@ -145,6 +145,18 @@ function avatarInner(room) {
 // 표시 이름: 이미지 아바타가 있으면 이름 그대로(❤️ 포함), 없으면 이모지 제거
 function displayName(room) { return room.avatar ? room.name : stripEmoji(room.name); }
 
+// 대화온도 — 낮을수록 위험(차가움)
+function tempInfo(t) {
+  if (t == null) return null;
+  if (t < 30) return { emoji: "❄️", label: "차가워요", cls: "cold" };
+  if (t < 65) return { emoji: "🌤️", label: "보통", cls: "mild" };
+  return { emoji: "☀️", label: "따뜻해요", cls: "warm" };
+}
+function tempBadge(room) {
+  const ti = tempInfo(room.temperature);
+  return ti ? `<span class="room__temp room__temp--${ti.cls}">${room.temperature}°</span>` : "";
+}
+
 function getRoom(id) { return PRESETS.rooms.find((r) => r.id === id); }
 
 function selectRoom(id) {
@@ -159,6 +171,12 @@ function selectRoom(id) {
   $("#chatAvatar").innerHTML = avatarInner(room);
   $("#chatName").textContent = displayName(room);
   $("#chatMeta").textContent = `${room.relationship} · 봇 연결됨`;
+  const ti = tempInfo(room.temperature);
+  const tempEl = $("#chatTemp");
+  if (tempEl) {
+    tempEl.className = "chat-temp" + (ti ? " chat-temp--" + ti.cls : "");
+    tempEl.innerHTML = ti ? `${ti.emoji} 대화온도 ${room.temperature}° · ${ti.label}` : "";
+  }
 
   renderChat(room);
   resetTranslation();
@@ -249,7 +267,7 @@ $("#coupleMode").addEventListener("change", async (e) => {
 async function translate(message, btn) {
   state.selectedMessage = message;
   $$(".translate-btn").forEach((b) => b.classList.remove("is-done"));
-  if (btn) { btn.classList.add("is-done"); btn.innerHTML = "🔮 통역됨"; }
+  if (btn) { btn.classList.add("is-done"); btn.innerHTML = "✓ 통역 완료"; }
 
   // 로딩 느낌
   $("#transEmpty").hidden = false;

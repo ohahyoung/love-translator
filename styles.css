@@ -475,3 +475,27 @@ body {
 /* 이미지 프로필 아바타 (방 목록 / 채팅 헤더 / 말풍선 옆) */
 .avatar-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
 .row__avatar .avatar-img { width: 26px; height: 26px; }
+
+/* 대화온도 — 방 썸네일 코너 배지 + 채팅 헤더 칩 */
+.room__avatar { position: relative; }
+.room__temp {
+  position: absolute; bottom: -4px; right: -5px;
+  font-size: 10px; font-weight: 700; line-height: 1;
+  padding: 2px 5px; border-radius: 999px; border: 2px solid #fff; color: #fff;
+}
+.room__temp--cold { background: #ff5277; }
+.room__temp--mild { background: var(--amber); }
+.room__temp--warm { background: var(--mint); color: #1f6b56; }
+
+.chat-temp {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11.5px; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+}
+.chat-temp--cold { background: #ffe1e8; color: #e0395c; }
+.chat-temp--mild { background: #fff2dd; color: #c98a2e; }
+.chat-temp--warm { background: #e4f7ef; color: #2f9576; }
+
+/* 시간 침범 방지 — 글자 작게 + 말풍선이 먼저 줄바꿈되도록 */
+.row__stack { max-width: 78%; }
+.bubble { min-width: 0; }
+.bubble__meta { font-size: 9.5px; flex-shrink: 0; }

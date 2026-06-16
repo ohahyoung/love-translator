@@ -15,9 +15,10 @@ const PRESETS = {
   rooms: [
     {
       id: "room-couple",
-      name: "앨리 ❤️",
+      name: "내 사랑",
       avatar: "assets/ellie.svg", // 프로필 썸네일 (사용자 첨부 이미지로 교체 가능)
       relationship: "연인",
+      temperature: 14, // 대화온도(°) — 낮을수록 위험
       lastMessage: "됐어 오지마",
       lastTime: "20:10",
       connected: true,
