@@ -16,7 +16,7 @@ const PRESETS = {
     {
       id: "room-couple",
       name: "내 사랑💕",
-      avatar: "assets/ellie.svg", // 프로필 썸네일 (사용자 첨부 이미지로 교체 가능)
+      avatar: "assets/ellie.png", // 프로필 썸네일 (사용자 첨부 원본 이미지)
       relationship: "연인",
       temperature: 36, // 대화온도(°) — 답장에 따라 매 턴 오르내림
       lastMessage: "나 아무거나!",
