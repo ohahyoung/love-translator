@@ -125,10 +125,9 @@ function renderRooms() {
       <div class="room__body">
         <div class="room__top">
           <span class="room__name">${stripEmoji(room.name)}</span>
-          <span class="room__rel">${room.relationship}</span>
+          <span class="room__time">${room.lastTime || ""}</span>
         </div>
         <div class="room__last">${room.lastMessage}</div>
-        <div class="room__badge">🔮 통역 가능 ${room.translatableCount}건</div>
       </div>`;
     li.addEventListener("click", () => selectRoom(room.id));
     list.appendChild(li);
@@ -160,21 +159,59 @@ function selectRoom(id) {
 function renderChat(room) {
   const body = $("#chatBody");
   body.innerHTML = "";
-  room.messages.forEach((m) => {
-    const wrap = document.createElement("div");
-    wrap.className = `msg msg--${m.from}` + (m.highlight ? " msg--highlight" : "");
-    wrap.innerHTML = `
-      <div class="msg__name">${m.name}</div>
-      <div class="bubble">${escapeHtml(m.text)}</div>
-      <div class="msg__time">${m.time}</div>`;
+
+  // 날짜 구분선 (텔레그램풍)
+  const datePill = document.createElement("div");
+  datePill.className = "chat-date";
+  datePill.innerHTML = "<span>오늘</span>";
+  body.appendChild(datePill);
+
+  const avatarEmoji = room.name.match(/\p{Emoji}/u)?.[0] || "💬";
+  let prevFrom = null;
+
+  room.messages.forEach((m, i) => {
+    const next = room.messages[i + 1];
+    const groupEnd = !next || next.from !== m.from; // 같은 사람 연속의 마지막
+    const groupStart = m.from !== prevFrom;
+    prevFrom = m.from;
+
+    const row = document.createElement("div");
+    row.className =
+      `row row--${m.from}` + (groupEnd ? " row--end" : "") + (groupStart ? " row--start" : "");
+
+    // 상대 메시지는 그룹 끝에만 아바타 노출 (텔레그램과 동일)
+    if (m.from === "them") {
+      const av = document.createElement("div");
+      av.className = "row__avatar";
+      if (groupEnd) av.textContent = avatarEmoji;
+      row.appendChild(av);
+    }
+
+    const stack = document.createElement("div");
+    stack.className = "row__stack";
+
+    const bw = document.createElement("div");
+    bw.className = "bubble-wrap";
+    const bubble = document.createElement("div");
+    bubble.className = "bubble" + (m.highlight ? " bubble--hl" : "");
+    bubble.textContent = m.text;
+    bw.appendChild(bubble);
+    const meta = document.createElement("span");
+    meta.className = "bubble__meta";
+    meta.textContent = (m.from === "me" && m.read ? "읽음 · " : "") + m.time;
+    bw.appendChild(meta);
+    stack.appendChild(bw);
+
     if (m.from === "them" && m.canTranslate) {
       const btn = document.createElement("button");
-      btn.className = "msg__translate";
+      btn.className = "translate-btn";
       btn.innerHTML = "🔮 통역하기";
       btn.addEventListener("click", () => translate(m, btn));
-      wrap.appendChild(btn);
+      stack.appendChild(btn);
     }
-    body.appendChild(wrap);
+
+    row.appendChild(stack);
+    body.appendChild(row);
   });
   body.scrollTop = body.scrollHeight;
 }
@@ -202,7 +239,7 @@ $("#coupleMode").addEventListener("change", async (e) => {
 
 async function translate(message, btn) {
   state.selectedMessage = message;
-  $$(".msg__translate").forEach((b) => b.classList.remove("is-done"));
+  $$(".translate-btn").forEach((b) => b.classList.remove("is-done"));
   if (btn) { btn.classList.add("is-done"); btn.innerHTML = "🔮 통역됨"; }
 
   // 로딩 느낌
