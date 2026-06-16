@@ -156,6 +156,20 @@ function tempBadge(room) {
   const ti = tempInfo(room.temperature);
   return ti ? `<span class="room__temp room__temp--${ti.cls}">${room.temperature}°</span>` : "";
 }
+// 대화온도 UI(헤더 칩 + 방 배지) 갱신
+function updateTempUI(room) {
+  const ti = tempInfo(room.temperature);
+  const tempEl = $("#chatTemp");
+  if (tempEl) {
+    tempEl.className = "chat-temp" + (ti ? " chat-temp--" + ti.cls : "");
+    tempEl.innerHTML = ti ? `${ti.emoji} 대화온도 ${room.temperature}° · ${ti.label}` : "";
+  }
+  const badge = $(".room__temp");
+  if (badge && ti) {
+    badge.className = "room__temp room__temp--" + ti.cls;
+    badge.textContent = room.temperature + "°";
+  }
+}
 
 function getRoom(id) { return PRESETS.rooms.find((r) => r.id === id); }
 
@@ -171,12 +185,7 @@ function selectRoom(id) {
   $("#chatAvatar").innerHTML = avatarInner(room);
   $("#chatName").textContent = displayName(room);
   $("#chatMeta").textContent = `${room.relationship} · 봇 연결됨`;
-  const ti = tempInfo(room.temperature);
-  const tempEl = $("#chatTemp");
-  if (tempEl) {
-    tempEl.className = "chat-temp" + (ti ? " chat-temp--" + ti.cls : "");
-    tempEl.innerHTML = ti ? `${ti.emoji} 대화온도 ${room.temperature}° · ${ti.label}` : "";
-  }
+  updateTempUI(room);
 
   renderChat(room);
   resetTranslation();
@@ -197,6 +206,26 @@ function renderChat(room) {
   let prevFrom = null;
 
   room.messages.forEach((m, i) => {
+    // 타이핑 인디케이터 (상대가 입력 중)
+    if (m.typing) {
+      const row = document.createElement("div");
+      row.className = "row row--them row--start row--end";
+      const av = document.createElement("div");
+      av.className = "row__avatar";
+      av.innerHTML = avatarHTML;
+      row.appendChild(av);
+      const stack = document.createElement("div");
+      stack.className = "row__stack";
+      const b = document.createElement("div");
+      b.className = "bubble bubble--typing";
+      b.innerHTML = "<span></span><span></span><span></span>";
+      stack.appendChild(b);
+      row.appendChild(stack);
+      body.appendChild(row);
+      prevFrom = m.from;
+      return;
+    }
+
     const next = room.messages[i + 1];
     const groupEnd = !next || next.from !== m.from; // 같은 사람 연속의 마지막
     const groupStart = m.from !== prevFrom;
@@ -390,6 +419,58 @@ function sendReply() {
   input.value = "";
   input.classList.remove("is-filled");
   toast("텔레그램으로 보냈어요 ✈️");
+
+  maybeTriggerOutcome(room, text);
+}
+
+/* ---------------- 동적 분기: 보낸 답장 → 상대 반응 + 대화온도 ---------------- */
+function maybeTriggerOutcome(room, sentText) {
+  const sel = state.selectedMessage;
+  if (!sel || !sel.outcome || sel._resolved) return;
+  // 방금 통역한 그 메시지가 방의 마지막 '상대' 메시지인지(=거기에 답한 것인지) 확인
+  const lastThem = [...room.messages].reverse().find((m) => m.from === "them" && !m.typing);
+  if (!lastThem || lastThem.id !== sel.id) return;
+
+  sel._resolved = true;
+  const risky = (sel._data && sel._data.riskyReply || "").trim();
+  const isBad = risky && sentText.trim() === risky;
+  const branch = isBad ? sel.outcome.bad : sel.outcome.good;
+
+  // 상대가 입력 중… (타이핑 인디케이터)
+  room.messages.push({ id: "typing", from: "them", typing: true });
+  renderChat(room);
+
+  setTimeout(() => {
+    room.messages = room.messages.filter((m) => m.id !== "typing");
+    room.messages.push({ id: "out-" + room.messages.length, from: "them", text: branch.reply, time: nowTime() });
+    room.lastMessage = branch.reply;
+    renderChat(room);
+    renderRooms();
+    $$(".room").forEach((el) => el.classList.toggle("is-active", el.dataset.roomId === state.activeRoomId));
+    animateTemperature(room, branch.temp, isBad);
+  }, 1500);
+}
+
+// 대화온도를 목표값까지 부드럽게 애니메이션 + 결과 토스트
+function animateTemperature(room, target, isBad) {
+  const start = room.temperature;
+  if (start == null) return;
+  const up = target > start;
+  const tick = () => {
+    room.temperature += up ? 2 : -2;
+    if ((up && room.temperature >= target) || (!up && room.temperature <= target)) {
+      room.temperature = target;
+    }
+    updateTempUI(room);
+    if (room.temperature !== target) {
+      setTimeout(tick, 45);
+    } else {
+      toast(isBad
+        ? `앗, 대화가 더 식었어요 ${start}° → ${target}° ❄️`
+        : `대화온도가 올라갔어요! ${start}° → ${target}° 💗`);
+    }
+  };
+  tick();
 }
 
 function nowTime() {

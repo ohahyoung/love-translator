@@ -36,7 +36,14 @@ const PRESETS = {
         { id: "m10", from: "me", text: "금방 갈게! 카페에서 기다려줄래?", time: "20:04" },
         { id: "m11", from: "them", text: "아니야 밖에서 기다릴게", time: "20:06", canTranslate: true },
         { id: "m12", from: "me", text: "화났어..?", time: "20:09", read: true },
-        { id: "m13", from: "them", text: "아냐 화 안났어", time: "20:10", canTranslate: true, highlight: true },
+        {
+          id: "m13", from: "them", text: "아냐 화 안났어", time: "20:10", canTranslate: true, highlight: true,
+          // 동적 분기: 보낸 답장에 따라 앨리의 반응과 대화온도가 달라짐
+          outcome: {
+            good: { reply: "사실 조금 서운했어ㅠ 근데 그렇게 말해주니까 마음 풀렸어… 조심히 와🥺", temp: 36 },
+            bad: { reply: "…응. 천천히 와.", temp: 8 },
+          },
+        },
       ],
     },
   ],
