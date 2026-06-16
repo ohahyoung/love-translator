@@ -18,7 +18,7 @@ const PRESETS = {
       name: "내 사랑💕",
       avatar: "assets/ellie.svg", // 프로필 썸네일 (사용자 첨부 이미지로 교체 가능)
       relationship: "연인",
-      temperature: 14, // 대화온도(°) — 낮을수록 위험
+      temperature: 36, // 대화온도(°) — 답장에 따라 매 턴 오르내림
       lastMessage: "나 아무거나!",
       lastTime: "13:20",
       connected: true,
@@ -32,27 +32,43 @@ const PRESETS = {
         [
           { from: "them", text: "자기 오늘 뭐 먹을까?", time: "13:18" },
           { from: "me", text: "내 사랑 뭐 먹고 싶어?", time: "13:19" },
-          { from: "them", text: "나 아무거나!", time: "13:20", canTranslate: true },
+          {
+            from: "them", text: "나 아무거나!", time: "13:20", canTranslate: true,
+            react: {
+              good: { reply: "오 좋아ㅎㅎ 그거 먹자! 역시 내 맘 잘 알아💕", temp: 42 },
+              bad: { reply: "음.. 그냥 아무거나 먹어도 됐는데~ 알겠어", temp: 28 },
+            },
+          },
         ],
         [
-          { sep: "저녁 7시 58분" },
-          { from: "them", text: "자기 나 도착했어~ 어디쯤이야?", time: "19:58" },
-          { from: "me", text: "헐 미안ㅠㅠ 나 아직 회사야… 일이 안 끝나서", time: "20:01" },
-          { from: "them", text: "잉? 우리 8시 약속이잖아", time: "20:01" },
-          { from: "me", text: "미안해 30분만 더 하면 갈 수 있을 거 같아", time: "20:02" },
-          { from: "them", text: "아.. 알겠어 천천히 와", time: "20:03", canTranslate: true },
+          { sep: "저녁 8시" },
+          { from: "them", text: "자기 나 도착했어~ 어디야??", time: "19:58" },
+          { from: "them", text: "또 회사야…?ㅠ", time: "20:00" },
+          {
+            from: "them", text: "아.. 알겠어 천천히 와", time: "20:01", canTranslate: true,
+            react: {
+              good: { reply: "응 그래도 빨리 와줘ㅠ 기다리고 있을게", temp: 48 },
+              bad: { reply: "하… 진짜 천천히 오게? 됐다", temp: 18 },
+            },
+          },
         ],
         [
-          { from: "me", text: "금방 갈게! 카페에서 기다려줄래?", time: "20:04" },
-          { from: "them", text: "아니야 밖에서 기다릴게", time: "20:06", canTranslate: true },
+          { from: "them", text: "나 추운데 카페라도 들어갈까…?", time: "20:05" },
+          {
+            from: "them", text: "아니야 밖에서 기다릴게", time: "20:06", canTranslate: true,
+            react: {
+              good: { reply: "ㅠㅠ 미안해할 거 없어… 빨리 와! 5분만!", temp: 54 },
+              bad: { reply: "…응. 그래.", temp: 10 },
+            },
+          },
         ],
         [
-          { from: "me", text: "화났어..?", time: "20:09" },
+          { from: "them", text: "나 진짜 화난 거 아니야", time: "20:09" },
           {
             from: "them", text: "아냐 화 안났어", time: "20:10", canTranslate: true, highlight: true,
-            outcome: {
-              good: { reply: "사실 조금 서운했어ㅠ 근데 그렇게 말해주니까 마음 풀렸어… 조심히 와🥺", temp: 36 },
-              bad: { reply: "…응. 천천히 와.", temp: 8 },
+            react: {
+              good: { reply: "사실 조금 서운했어ㅠ 근데 그렇게 말해주니까 마음 풀렸어… 조심히 와🥺", temp: 72 },
+              bad: { reply: "…응. 천천히 와.", temp: 4 },
             },
           },
         ],

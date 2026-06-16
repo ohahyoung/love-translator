@@ -195,6 +195,8 @@ function selectRoom(id) {
 }
 
 /* ---------------- 가이드 시나리오 엔진 ---------------- */
+// 등장 속도(ms) — 너무 빠르지 않게
+const PACE = { typing: 1300, themGap: 650, meGap: 800, sep: 700, reactTyping: 1500, betweenSeg: 1100 };
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 function highlightActive() {
   $$(".room").forEach((el) => el.classList.toggle("is-active", el.dataset.roomId === state.activeRoomId));
@@ -221,13 +223,13 @@ async function revealSegment(room, idx, gen) {
     if (m.sep) {
       room.messages.push({ sep: m.sep });
       renderChat(room);
-      await delay(450);
+      await delay(PACE.sep);
       continue;
     }
     if (m.from === "them") {
       room.messages.push({ id: "typing", from: "them", typing: true });
       renderChat(room);
-      await delay(850);
+      await delay(PACE.typing);
       if (gen !== state.scenarioGen) return;
       room.messages = room.messages.filter((x) => !x.typing);
     }
@@ -236,45 +238,54 @@ async function revealSegment(room, idx, gen) {
     renderChat(room);
     renderRooms();
     highlightActive();
-    await delay(m.from === "them" ? 350 : 480);
+    await delay(m.from === "them" ? PACE.themGap : PACE.meGap);
   }
   if (gen !== state.scenarioGen) return;
   state.revealing = false;
   room._awaiting = true; // 체크포인트(마지막 상대 메시지) 답장 대기
 }
 
-// 보낸 답장 → 다음 세그먼트 진행 (또는 마지막이면 outcome 분기)
+// 보낸 답장 → 앨리가 (좋음/위험)에 맞게 반응 + 대화온도 변화 → 다음 세그먼트로
 function advanceScenario(room, sentText) {
   if (!room._awaiting) return;
   room._awaiting = false;
-  const checkpoint = [...room.messages].reverse().find((m) => m.from === "them" && !m.typing);
-  if (checkpoint && checkpoint.outcome && !checkpoint._resolved) {
-    checkpoint._resolved = true;
-    triggerOutcome(room, checkpoint, sentText);
+  const cp = [...room.messages].reverse().find(
+    (m) => m.from === "them" && !m.typing && m.react && !m._resolved
+  );
+  if (!cp) { // 안전장치: 반응 데이터가 없으면 그냥 다음 세그먼트
+    room._segIndex++;
+    revealSegment(room, room._segIndex, state.scenarioGen);
     return;
   }
-  room._segIndex++;
-  revealSegment(room, room._segIndex, state.scenarioGen);
-}
+  cp._resolved = true;
 
-// 마지막 분기: 추천 답장이면 풀림+온도↑, 위험한 답변이면 식음+온도↓
-function triggerOutcome(room, checkpoint, sentText) {
-  const risky = ((checkpoint._data && checkpoint._data.riskyReply) || "").trim();
-  const isBad = risky && sentText.trim() === risky;
-  const branch = isBad ? checkpoint.outcome.bad : checkpoint.outcome.good;
+  const gen = state.scenarioGen;
+  const risky = ((cp._data && cp._data.riskyReply) || "").trim();
+  const isBad = !!risky && sentText.trim() === risky;
+  const branch = isBad ? cp.react.bad : cp.react.good;
+  const isLast = !room.script[room._segIndex + 1];
+
   state.revealing = true;
   room.messages.push({ id: "typing", from: "them", typing: true });
   renderChat(room);
+
   setTimeout(() => {
+    if (gen !== state.scenarioGen) return; // 시나리오 재시작됨 → 중단
     room.messages = room.messages.filter((m) => !m.typing);
-    room.messages.push({ id: "out" + room.messages.length, from: "them", text: branch.reply, time: room._clock || "" });
+    room.messages.push({ id: "react" + room.messages.length, from: "them", text: branch.reply, time: room._clock || "" });
     room.lastMessage = branch.reply;
     renderChat(room);
     renderRooms();
     highlightActive();
-    state.revealing = false;
-    animateTemperature(room, branch.temp, isBad);
-  }, 1600);
+    animateTemperature(room, branch.temp, isBad); // 매 턴 온도 변화
+
+    if (isLast) {
+      state.revealing = false; // 대화 종료
+    } else {
+      room._segIndex++;
+      setTimeout(() => revealSegment(room, room._segIndex, state.scenarioGen), PACE.betweenSeg);
+    }
+  }, PACE.reactTyping);
 }
 
 /* ---------------- 중앙: 채팅 ---------------- */
@@ -529,6 +540,7 @@ function animateTemperature(room, target, isBad) {
     if ((up && room.temperature >= target) || (!up && room.temperature <= target)) {
       room.temperature = target;
     }
+    room.temperature = Math.max(0, Math.min(100, room.temperature));
     updateTempUI(room);
     if (room.temperature !== target) {
       setTimeout(tick, 60);
