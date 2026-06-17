@@ -14,105 +14,99 @@
     --font:"Pretendard",system-ui,sans-serif; --round:"Gowun Dodum",var(--font);
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html,body{height:100%;background:#15101300}
-  body{
-    font-family:var(--font); color:var(--ink); overflow:hidden;
-    background:#efe7e0;
-  }
-  /* 무대 */
-  .stage{position:fixed;inset:0;display:grid;place-items:center;padding:0;}
+  html,body{height:100%}
+  body{font-family:var(--font); color:var(--ink); overflow:hidden; background:#efe7e0;}
+  .stage{position:fixed;inset:0;display:grid;place-items:center}
   .slide{
-    position:absolute; inset:0; display:none; place-items:center;
-    padding:6vmin 9vmin; opacity:0; transform:translateY(14px) scale(.99);
-    transition:opacity .5s ease, transform .5s ease;
+    position:absolute; inset:0; display:none; place-items:center; padding:7vmin 10vmin;
+    opacity:0; transform:translateY(12px) scale(.99); transition:opacity .5s ease, transform .5s ease;
   }
   .slide.active{display:grid; opacity:1; transform:none;}
-  .inner{width:min(1100px,92vw)}
+  .inner{width:min(1000px,90vw)}
 
-  /* 공통 타이포 */
-  .eyebrow{display:inline-block;font-weight:800;font-size:clamp(13px,1.5vw,18px);letter-spacing:1px;
+  .eyebrow{display:inline-block;font-weight:800;font-size:clamp(11px,1.2vw,15px);letter-spacing:1px;
     color:var(--rose);background:linear-gradient(100deg,var(--rose-soft),var(--lav-soft));
-    border:1px solid #fbd6e3;padding:8px 18px;border-radius:999px;margin-bottom:26px}
-  h1{font-family:var(--round);font-weight:700;letter-spacing:-2px;line-height:1.08;color:var(--ink)}
+    border:1px solid #fbd6e3;padding:7px 16px;border-radius:999px;margin-bottom:22px}
+  h1{font-family:var(--round);font-weight:700;letter-spacing:-1.5px;line-height:1.1;color:var(--ink)}
   .grad{background:linear-gradient(100deg,var(--rose),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent}
   .muted{color:var(--ink-soft)}
 
-  /* 배경 변주 */
-  .bg-cream{background:radial-gradient(900px 560px at 12% -10%,var(--rose-soft),transparent 56%),radial-gradient(900px 560px at 100% 4%,var(--lav-soft),transparent 54%),#fbf5f0}
-  .bg-ink{background:radial-gradient(800px 500px at 85% 110%,#3a2740,transparent 60%),#241a22;color:#fdf6f0}
+  .bg-cream{background:radial-gradient(820px 520px at 12% -10%,var(--rose-soft),transparent 56%),radial-gradient(820px 520px at 100% 4%,var(--lav-soft),transparent 54%),#fbf5f0}
+  .bg-ink{background:radial-gradient(760px 480px at 86% 112%,#3a2740,transparent 60%),#241a22;color:#fdf6f0}
   .bg-soft{background:linear-gradient(135deg,#fff,#fbf2f6)}
+
+  /* 이미지 자리(없으면 안내 placeholder) */
+  .ph{display:grid;place-items:center;text-align:center;background:repeating-linear-gradient(45deg,#f6ecf1,#f6ecf1 10px,#fbf4f7 10px,#fbf4f7 20px);
+    color:#b89aac;font-weight:700;border:1.5px dashed #e7c9d8;border-radius:16px;font-size:13px;line-height:1.6}
+  .ph span{font-size:11px;font-weight:600;opacity:.8}
+  .bg-ink .ph{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.18);color:#caa9b9}
 
   /* S1 */
   .s1 .inner{text-align:center}
-  .s1 h1{font-size:clamp(48px,8.5vw,108px)}
-  .s1 .sub{margin-top:24px;font-size:clamp(18px,2.4vw,30px);color:var(--ink-soft);font-weight:500}
+  .s1 h1{font-size:clamp(40px,6.8vw,82px)}
+  .s1 .sub{margin-top:20px;font-size:clamp(15px,1.9vw,23px);color:var(--ink-soft);font-weight:500}
   .s1 .sub b{color:var(--rose);font-weight:700}
-  .s1 .mong{width:clamp(90px,12vw,150px);margin:0 auto 6px;display:block}
+  .s1 .mong{width:clamp(76px,9vw,118px);margin:0 auto 4px;display:block}
 
-  /* S2 훅 */
+  /* S2 훅 — 좌 이미지 / 우 인용 */
+  .s2 .grid{display:grid;grid-template-columns:0.82fr 1.18fr;gap:48px;align-items:center}
+  .s2 .poster{aspect-ratio:3/4;border-radius:18px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+  .s2 .poster img{width:100%;height:100%;object-fit:cover;display:block}
+  .s2 .poster .ph{width:100%;height:100%}
   .s2 .eyebrow{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#ffc2d4}
-  .quote{font-family:var(--round);font-size:clamp(22px,3.4vw,42px);line-height:1.5;margin:0 0 26px;position:relative;padding-left:32px}
-  .quote::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:5px;border-radius:5px;background:linear-gradient(var(--rose),var(--lav))}
-  .quote .who{display:block;font-family:var(--font);font-size:clamp(13px,1.5vw,17px);color:#caa9b9;margin-top:8px;font-weight:600}
-  .s2 .punch{margin-top:38px;font-size:clamp(20px,2.6vw,32px);font-weight:700;line-height:1.4}
+  .quote{font-family:var(--round);font-size:clamp(17px,2.2vw,28px);line-height:1.55;margin:0 0 20px;position:relative;padding-left:24px}
+  .quote::before{content:"";position:absolute;left:0;top:5px;bottom:5px;width:4px;border-radius:4px;background:linear-gradient(var(--rose),var(--lav))}
+  .quote .who{display:block;font-family:var(--font);font-size:clamp(11px,1.2vw,14px);color:#caa9b9;margin-top:6px;font-weight:600}
+  .s2 .punch{margin-top:26px;font-size:clamp(16px,1.9vw,24px);font-weight:700;line-height:1.45}
   .s2 .punch b{color:#ff9bb8}
 
   /* S3 작품 */
-  .s3 h1{font-size:clamp(30px,4.6vw,58px)}
-  .works{display:flex;gap:18px;flex-wrap:wrap;margin:38px 0 30px}
-  .work{flex:1 1 240px;background:#fff;border:1.5px solid #f1e2ea;border-radius:20px;padding:22px 22px;box-shadow:0 14px 34px rgba(199,120,150,.12)}
-  .work .k{font-size:13px;font-weight:800;color:var(--rose);letter-spacing:.5px}
-  .work .t{font-size:clamp(17px,2vw,22px);font-weight:700;margin-top:8px;line-height:1.35}
-  .s3 .bridge{font-size:clamp(20px,2.7vw,34px);font-weight:800;line-height:1.45}
-  .s3 .bridge .grad{font-weight:800}
+  .s3 h1{font-size:clamp(26px,3.8vw,46px)}
+  .works{display:flex;gap:18px;margin:34px 0 28px}
+  .work{flex:1;background:#fff;border:1.5px solid #f1e2ea;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(199,120,150,.12);display:flex;flex-direction:column}
+  .work .cover{aspect-ratio:4/3;overflow:hidden;background:#faf2f6}
+  .work .cover img{width:100%;height:100%;object-fit:cover;display:block}
+  .work .cover .ph{width:100%;height:100%;border:0;border-radius:0;border-bottom:1.5px dashed #e7c9d8}
+  .work .meta{padding:14px 16px}
+  .work .k{font-size:11px;font-weight:800;color:var(--rose);letter-spacing:.5px}
+  .work .t{font-size:clamp(14px,1.5vw,18px);font-weight:700;margin-top:5px;line-height:1.35}
+  .s3 .bridge{font-size:clamp(17px,2.2vw,28px);font-weight:800;line-height:1.45}
 
-  /* S4 제품 */
-  .s4 h1{font-size:clamp(30px,4.4vw,56px);text-align:center;margin-bottom:34px}
-  .flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:14px}
-  .step{background:#fff;border:1.5px solid #f1e2ea;border-radius:20px;padding:22px 18px;text-align:center;box-shadow:0 12px 30px rgba(199,120,150,.12)}
-  .step .n{font-size:13px;font-weight:800;color:var(--lav)}
-  .step .h{font-size:clamp(17px,1.9vw,22px);font-weight:800;margin:8px 0 6px}
-  .step .d{font-size:clamp(13px,1.4vw,16px);color:var(--ink-soft);line-height:1.45}
-  .arr{display:grid;place-items:center;font-size:26px;color:var(--rose);font-weight:800}
-  .s4 .kicker{margin-top:30px;text-align:center;font-size:clamp(17px,2.1vw,26px);font-weight:700}
+  /* S4 제품 — 좌 텍스트 / 우 캡처 */
+  .s4 h1{font-size:clamp(24px,3.4vw,42px);margin-bottom:28px}
+  .s4 .grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+  .steps{display:flex;flex-direction:column;gap:14px}
+  .step{background:#fff;border:1.5px solid #f1e2ea;border-radius:16px;padding:16px 18px;box-shadow:0 8px 22px rgba(199,120,150,.1);display:flex;gap:14px;align-items:flex-start}
+  .step .n{flex-shrink:0;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;font-size:13px;background:linear-gradient(135deg,var(--rose),var(--lav))}
+  .step .h{font-size:clamp(15px,1.7vw,19px);font-weight:800}
+  .step .d{font-size:clamp(12px,1.3vw,15px);color:var(--ink-soft);line-height:1.45;margin-top:2px}
+  .shot{border-radius:16px;overflow:hidden;box-shadow:0 24px 56px rgba(199,120,150,.28);border:1px solid #f0dce6}
+  .shot img{width:100%;display:block}
+  .shot .ph{aspect-ratio:16/10;width:100%}
+  .s4 .kicker{margin-top:24px;font-size:clamp(14px,1.7vw,20px);font-weight:700}
   .s4 .kicker b{color:var(--rose)}
-  .s4 .url{margin-top:14px;text-align:center;font-size:15px;color:var(--ink-soft);font-weight:600}
+  .s4 .url{margin-top:8px;font-size:13px;color:var(--ink-soft);font-weight:600}
 
   /* S5 비전 */
-  .s5 h1{font-size:clamp(30px,4.6vw,58px);margin-bottom:34px}
-  .vis{display:flex;flex-direction:column;gap:16px}
-  .v{display:flex;align-items:center;gap:20px;background:#fff;border:1.5px solid #f1e2ea;border-radius:18px;padding:20px 24px;box-shadow:0 10px 26px rgba(199,120,150,.1)}
-  .v .num{flex-shrink:0;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;font-size:18px;background:linear-gradient(135deg,var(--rose),var(--lav))}
-  .v .txt{font-size:clamp(16px,1.9vw,23px);font-weight:600;line-height:1.4}
+  .s5 h1{font-size:clamp(26px,3.8vw,46px);margin-bottom:30px}
+  .vis{display:flex;flex-direction:column;gap:14px}
+  .v{display:flex;align-items:center;gap:18px;background:#fff;border:1.5px solid #f1e2ea;border-radius:16px;padding:18px 22px;box-shadow:0 8px 22px rgba(199,120,150,.1)}
+  .v .num{flex-shrink:0;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;font-size:16px;background:linear-gradient(135deg,var(--rose),var(--lav))}
+  .v .txt{font-size:clamp(14px,1.7vw,21px);font-weight:600;line-height:1.4}
   .v .txt b{color:var(--rose);font-weight:800}
-  .s5 .close{margin-top:34px;text-align:center;font-family:var(--round);font-size:clamp(22px,3vw,38px);color:var(--ink)}
-  .s5 .close .grad{font-weight:700}
+  .s5 .close{margin-top:30px;text-align:center;font-family:var(--round);font-size:clamp(20px,2.6vw,34px)}
 
-  /* 미니 통역기 위젯 (S1, S4) */
-  .tr{width:min(560px,86vw);margin:30px auto 0;background:#fff;border-radius:20px;border:1.5px solid #f3e2ea;box-shadow:0 20px 50px rgba(199,120,150,.2);overflow:hidden;text-align:left}
-  .tr .bar{display:flex;align-items:center;justify-content:center;gap:16px;padding:12px;background:linear-gradient(100deg,#fdeef3,#eef1fb);border-bottom:1px solid #f3e2ea}
-  .tr .bar .f{color:var(--rose);font-weight:800}.tr .bar .m{color:var(--blue);font-weight:800}
-  .tr .bar .sw{width:28px;height:28px;border-radius:50%;background:#fff;display:grid;place-items:center;color:#9a8f96;box-shadow:0 2px 6px rgba(0,0,0,.08)}
-  .tr .row{padding:14px 20px}.tr .row.out{background:linear-gradient(120deg,#fff,#fff6fa);border-top:1px dashed #f1d9e6}
-  .tr .tag{font-size:13px;font-weight:700;color:#b3a3ab}.tr .row.out .tag{color:var(--rose)}
-  .tr .said{font-size:clamp(18px,2.2vw,24px);font-weight:700;margin-top:4px}
-  .tr .mean{font-size:clamp(18px,2.2vw,24px);font-weight:800;color:var(--rose);margin-top:4px}
-  .temp{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:16px;font-weight:800;color:#2f9576;font-size:15px}
-  .temp .barx{width:120px;height:8px;border-radius:999px;background:#e7efe9;overflow:hidden}
-  .temp .barx i{display:block;height:100%;width:62%;background:#37c08a;border-radius:999px}
-
-  /* 진행/넘김 UI */
+  /* UI */
   .prog{position:fixed;left:0;top:0;height:4px;background:linear-gradient(90deg,var(--rose),var(--lav));z-index:30;transition:width .4s ease}
-  .count{position:fixed;right:24px;bottom:20px;font-size:13px;font-weight:700;color:var(--ink-soft);z-index:30;background:rgba(255,255,255,.7);padding:5px 12px;border-radius:999px}
+  .count{position:fixed;right:22px;bottom:18px;font-size:12px;font-weight:700;color:var(--ink-soft);z-index:30;background:rgba(255,255,255,.7);padding:5px 12px;border-radius:999px}
   .bg-ink .count{color:#e9d6e0;background:rgba(255,255,255,.12)}
-  .hint{position:fixed;left:24px;bottom:20px;font-size:12px;color:var(--ink-soft);z-index:30;opacity:.7}
+  .hint{position:fixed;left:22px;bottom:18px;font-size:11px;color:var(--ink-soft);z-index:30;opacity:.7}
   .bg-ink .hint{color:#cbb}
   .nav{position:fixed;inset:0;display:flex;z-index:20}
   .nav .half{flex:1;cursor:pointer}
 
   @media print{
-    body{overflow:visible}
-    .stage{position:static}
+    body{overflow:visible}.stage{position:static}
     .slide{display:grid!important;opacity:1!important;transform:none!important;position:relative;page-break-after:always;height:100vh;width:100vw}
     .prog,.count,.hint,.nav{display:none!important}
   }
@@ -126,33 +120,49 @@
     <section class="slide s1 bg-cream">
       <div class="inner">
         <img class="mong" src="assets/ellie.png" alt="" />
-        <span class="eyebrow">💕 연애 통역기</span>
+        <span class="eyebrow">💕 사랑 통역기</span>
         <h1>이 사랑, <span class="grad">통역</span>됩니다.</h1>
         <p class="sub">남녀의 <b>다른 언어</b>를 통역하는 AI</p>
       </div>
     </section>
 
-    <!-- 2. 훅: 드라마 대사 -->
+    <!-- 2. 훅: 드라마 -->
     <section class="slide s2 bg-ink">
       <div class="inner">
-        <span class="eyebrow">드라마 〈이 사랑 통역되나요?〉</span>
-        <p class="quote">"내가 알아듣게 얘기해요.<br/>당신의 언어는 나한테 너무 어려워요."</p>
-        <p class="quote">"세상에 다른 언어가 몇 개인 줄 아나?<br/>… 세상 모든 사람의 수만큼 있지."
-          <span class="who">— 극 중 대사</span></p>
-        <p class="punch">같은 한국어를 써도, 우리는 <b>서로 다른 언어</b>를 씁니다.</p>
+        <div class="grid">
+          <div class="poster">
+            <img src="assets/drama.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" />
+            <div class="ph" style="display:none">🎬 드라마 장면/포스터<br/><span>assets/drama.jpg</span></div>
+          </div>
+          <div>
+            <span class="eyebrow">드라마 〈이 사랑 통역되나요?〉</span>
+            <p class="quote">"내가 알아듣게 얘기해요.<br/>당신의 언어는 나한테 너무 어려워요."</p>
+            <p class="quote">"세상에 다른 언어가 몇 개인 줄 아나?<br/>… 세상 모든 사람의 수만큼 있지."<span class="who">— 극 중 대사</span></p>
+            <p class="punch">같은 한국어를 써도, 우리는 <b>서로 다른 언어</b>를 씁니다.</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- 3. 모두가 공감한 문제 -->
     <section class="slide s3 bg-soft">
       <div class="inner">
-        <h1>모두가 알지만,<br/>아무도 못 풀던 문제</h1>
+        <h1>남녀의 언어 차이,<br/>모두가 알던 오랜 숙제</h1>
         <div class="works">
-          <div class="work"><div class="k">📚 BOOK</div><div class="t">화성에서 온 남자,<br/>금성에서 온 여자</div></div>
-          <div class="work"><div class="k">🎵 SONG</div><div class="t">"대화가 필요해"</div></div>
-          <div class="work"><div class="k">📺 DRAMA</div><div class="t">이 사랑<br/>통역되나요?</div></div>
+          <div class="work">
+            <div class="cover"><img src="assets/book.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" /><div class="ph" style="display:none">📚 책 표지<br/><span>assets/book.jpg</span></div></div>
+            <div class="meta"><div class="k">📚 BOOK</div><div class="t">화성에서 온 남자,<br/>금성에서 온 여자</div></div>
+          </div>
+          <div class="work">
+            <div class="cover"><img src="assets/song.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" /><div class="ph" style="display:none">🎵 앨범 이미지<br/><span>assets/song.jpg</span></div></div>
+            <div class="meta"><div class="k">🎵 SONG</div><div class="t">자우림<br/>"대화가 필요해"</div></div>
+          </div>
+          <div class="work">
+            <div class="cover"><img src="assets/drama.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" /><div class="ph" style="display:none">📺 드라마<br/><span>assets/drama.jpg</span></div></div>
+            <div class="meta"><div class="k">📺 DRAMA</div><div class="t">이 사랑<br/>통역되나요?</div></div>
+          </div>
         </div>
-        <p class="bridge">사람 수만큼의 언어를,<br/><span class="grad">AI로 통역해보면 어떨까?</span></p>
+        <p class="bridge">남녀의 다른 언어, <span class="grad">AI로 통역해보면 어떨까?</span></p>
       </div>
     </section>
 
@@ -160,15 +170,19 @@
     <section class="slide s4 bg-cream">
       <div class="inner">
         <h1>그래서 만들었습니다</h1>
-        <div class="flow">
-          <div class="step"><div class="n">STEP 1</div><div class="h">감지</div><div class="d">오해가 생길 만한 애매한 한마디를 AI가 캐치</div></div>
-          <div class="arr">→</div>
-          <div class="step"><div class="n">STEP 2</div><div class="h">통역</div><div class="d">"됐어 오지마"의 진짜 속뜻을 알려줘요</div></div>
-          <div class="arr">→</div>
-          <div class="step"><div class="n">STEP 3</div><div class="h">답장 추천</div><div class="d">하면 안 되는 답변 + 관계를 지키는 답장</div></div>
+        <div class="grid">
+          <div class="steps">
+            <div class="step"><div class="n">1</div><div><div class="h">감지</div><div class="d">오해가 생길 만한 애매한 한마디를 AI가 캐치</div></div></div>
+            <div class="step"><div class="n">2</div><div><div class="h">통역</div><div class="d">"됐어 오지마"의 진짜 속뜻을 알려줘요</div></div></div>
+            <div class="step"><div class="n">3</div><div><div class="h">답장 추천</div><div class="d">하면 안 되는 답변 + 관계를 지키는 답장</div></div></div>
+            <p class="kicker">내 답장에 따라 상대 반응과 <b>'대화온도'</b>가 실시간으로 바뀝니다.</p>
+            <p class="url">🔗 love-translator-demo.vercel.app</p>
+          </div>
+          <div class="shot">
+            <img src="assets/demo.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" />
+            <div class="ph" style="display:none">📱 제품 화면 캡처<br/><span>assets/demo.png</span></div>
+          </div>
         </div>
-        <p class="kicker">내 답장에 따라 상대 반응과 <b>'대화온도'</b>가 실시간으로 바뀝니다.</p>
-        <p class="url">🔗 love-translator-demo.vercel.app</p>
       </div>
     </section>
 
@@ -179,9 +193,9 @@
         <div class="vis">
           <div class="v"><div class="num">1</div><div class="txt"><b>모든 사랑하는 관계로</b> — 연인을 넘어 가족·친구까지</div></div>
           <div class="v"><div class="num">2</div><div class="txt"><b>나에게 맞춤 통역</b> — 내 성향·상대 성향·대화 히스토리 기반으로 정교하게</div></div>
-          <div class="v"><div class="num">3</div><div class="txt"><b>메신저에 바로</b> — 카카오톡 등에서 보내기 전에 한 번</div></div>
+          <div class="v"><div class="num">3</div><div class="txt"><b>모든 메신저로</b> — 텔레그램을 넘어 카카오톡·iMessage 어디서든</div></div>
         </div>
-        <p class="close">보내기 전에 한 번, <span class="grad">통역.</span></p>
+        <p class="close">이 사랑, <span class="grad">통역</span>됩니다.</p>
       </div>
     </section>
 
@@ -192,20 +206,16 @@
   <div class="nav"><div class="half" id="prev"></div><div class="half" id="next"></div></div>
 
 <script>
-  const slides=[...document.querySelectorAll('.slide')];
-  let i=0;
-  function show(n){
-    i=Math.max(0,Math.min(slides.length-1,n));
+  const slides=[...document.querySelectorAll('.slide')];let i=0;
+  function show(n){i=Math.max(0,Math.min(slides.length-1,n));
     slides.forEach((s,idx)=>s.classList.toggle('active',idx===i));
     document.getElementById('count').textContent=(i+1)+' / '+slides.length;
-    document.getElementById('prog').style.width=((i+1)/slides.length*100)+'%';
-  }
-  function next(){show(i+1)} function prev(){show(i-1)}
+    document.getElementById('prog').style.width=((i+1)/slides.length*100)+'%';}
+  function next(){show(i+1)}function prev(){show(i-1)}
   document.addEventListener('keydown',e=>{
     if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();next()}
     if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prev()}
-    if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1);
-  });
+    if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1);});
   document.getElementById('next').addEventListener('click',next);
   document.getElementById('prev').addEventListener('click',prev);
   show(0);
