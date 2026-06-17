@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1280px; height:720px; overflow:hidden; }
+  body {
+    font-family:"Pretendard",sans-serif;
+    background:
+      radial-gradient(900px 520px at 12% -8%, #ffe3ec, transparent 58%),
+      radial-gradient(900px 520px at 100% 6%, #efeaff, transparent 55%),
+      #fbf5f0;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .wrap { width:1120px; display:flex; align-items:center; gap:56px; }
+  .left { flex:1; }
+  .badge {
+    display:inline-block; background:linear-gradient(100deg,#ffe3ec,#efeaff);
+    color:#f0568a; font-weight:800; font-size:22px; padding:9px 20px; border-radius:999px;
+    border:1px solid #fbd6e3; margin-bottom:22px;
+  }
+  h1 { font-family:"Gowun Dodum",sans-serif; font-size:78px; letter-spacing:-2px; color:#3a2d33; line-height:1.1; }
+  h1 .g { background:linear-gradient(100deg,#f0568a,#b8a8ff); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sub { margin-top:18px; font-size:26px; color:#7a6b72; font-weight:500; }
+  .sub b { color:#f0568a; font-weight:700; }
+  /* translator card */
+  .tr {
+    margin-top:38px; width:560px; background:#fff; border-radius:24px;
+    box-shadow:0 24px 60px rgba(199,120,150,.22); border:1.5px solid #f3e2ea; overflow:hidden;
+  }
+  .tr__bar { display:flex; align-items:center; justify-content:center; gap:18px; padding:16px; background:linear-gradient(100deg,#fdeef3,#eef1fb); border-bottom:1px solid #f3e2ea; }
+  .tr__bar .f { color:#f0568a; font-weight:800; font-size:22px; }
+  .tr__bar .m { color:#4a78b0; font-weight:800; font-size:22px; }
+  .tr__bar .sw { width:34px;height:34px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:18px;color:#9a8f96;box-shadow:0 3px 8px rgba(0,0,0,.08); }
+  .tr__row { padding:18px 24px; }
+  .tr__row.out { background:linear-gradient(120deg,#fff,#fff6fa); border-top:1px dashed #f1d9e6; }
+  .tr__tag { font-size:16px; font-weight:700; color:#b3a3ab; }
+  .tr__row.out .tr__tag { color:#f0568a; }
+  .tr__said { font-size:30px; font-weight:700; color:#3a2d33; margin-top:6px; }
+  .tr__mean { font-size:30px; font-weight:800; color:#f0568a; margin-top:6px; }
+  .right { width:300px; display:flex; flex-direction:column; align-items:center; }
+  .right img { width:240px; height:240px; object-fit:contain; filter:drop-shadow(0 18px 30px rgba(199,120,150,.25)); }
+  .heart { font-size:40px; margin-top:6px; }
+  .foot { position:absolute; bottom:34px; left:0; right:0; text-align:center; color:#a99; font-size:19px; font-weight:600; letter-spacing:.5px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="left">
+      <span class="badge">💕 사랑 통역기</span>
+      <h1>이 사랑,<br /><span class="g">통역</span>됩니다.</h1>
+      <p class="sub">세상에서 가장 어려운 외국어는,<br /><b>사랑하는 사람의 말</b>이니까요.</p>
+      <div class="tr">
+        <div class="tr__bar"><span class="f">♀ 여자어</span><span class="sw">⇄</span><span class="m">♂ 남자어</span></div>
+        <div class="tr__row"><div class="tr__tag">그 사람이 한 말</div><div class="tr__said">"됐어 오지마"</div></div>
+        <div class="tr__row out"><div class="tr__tag">💗 진짜 속뜻</div><div class="tr__mean">사실은 와서 달래줘</div></div>
+      </div>
+    </div>
+    <div class="right">
+      <img src="assets/ellie.png" alt="" />
+      <div class="heart">💗</div>
+    </div>
+  </div>
+  <div class="foot">남녀 언어 통역 서비스 · love-translator-demo.vercel.app</div>
+</body>
+</html>
