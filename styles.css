@@ -541,3 +541,43 @@ body {
 .trans-more:hover { color: var(--rose-deep); }
 .trans-detail { display: flex; flex-direction: column; gap: 12px; }
 .trans-detail[hidden] { display: none; }
+
+/* ========================================================= 
+   MVP 리디자인 — 3 시나리오 / 통역기 위젯 / 온도 게이지 / 커플모드 설명
+   ========================================================= */
+/* ① 헤더 프로필 배경(하늘색 제거) */
+.chat-head__avatar { background: #fff; }
+.chat-head__info { min-width: 0; }
+
+/* ② 대화온도 게이지 (헤더 우측) */
+.chat-temp { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; background: transparent; }
+.chat-temp__label { white-space: nowrap; font-size: 12px; font-weight: 700; }
+.chat-temp__bar { width: 56px; height: 7px; border-radius: 999px; background: #ece3da; overflow: hidden; flex-shrink: 0; }
+.chat-temp__bar i { display: block; height: 100%; border-radius: 999px; background: currentColor; transition: width .25s ease; }
+.chat-temp__num { font-size: 12.5px; font-weight: 800; min-width: 30px; text-align: right; }
+
+/* 방 목록 — 상황(topic) */
+.room__topic { display: inline-block; font-size: 10.5px; color: var(--ink-soft); background: #f3eef2; padding: 1px 8px; border-radius: 999px; margin: 2px 0; }
+
+/* ④ 통역기 위젯 (그 사람 말 → 진짜 속뜻) */
+.tr2 { border: 1.5px solid var(--line); border-radius: var(--radius); overflow: hidden; background: #fff; box-shadow: var(--shadow-sm); }
+.tr2__row { padding: 12px 15px; }
+.tr2__row--out { background: linear-gradient(120deg, #fff, #fff6fa); border-top: 1px dashed #f1d9e6; }
+.tr2__lang { font-size: 11px; font-weight: 700; color: var(--ink-faint); letter-spacing: .2px; }
+.tr2__row--out .tr2__lang { color: var(--rose-deep); }
+.tr2__said { font-size: 15px; font-weight: 600; color: var(--ink); margin-top: 4px; }
+.tr2__mean { font-size: 15px; font-weight: 700; color: var(--rose-deep); margin-top: 4px; line-height: 1.5; }
+.tr2__arrow { text-align: center; font-size: 11px; font-weight: 700; color: var(--lavender); padding: 3px 0 5px; }
+
+/* ⑤ 우리 커플 모드 설명(ⓘ) */
+.couple-wrap { display: inline-flex; align-items: center; gap: 6px; }
+.couple-info { position: relative; cursor: pointer; color: var(--ink-faint); font-size: 13px; width: 18px; height: 18px; display: inline-grid; place-items: center; border-radius: 50%; }
+.couple-info:hover { color: var(--rose-deep); }
+.couple-info__tip {
+  position: absolute; top: 135%; right: 0; width: 210px; z-index: 30;
+  background: var(--ink); color: #fff; font-size: 11.5px; line-height: 1.5; font-weight: 500;
+  padding: 9px 12px; border-radius: 10px; box-shadow: var(--shadow);
+  opacity: 0; visibility: hidden; transform: translateY(-4px); transition: all .15s ease;
+}
+.couple-info:hover .couple-info__tip,
+.couple-info:focus .couple-info__tip { opacity: 1; visibility: visible; transform: translateY(0); }

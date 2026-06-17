@@ -136,6 +136,7 @@ function renderRooms() {
           <span class="room__name">${displayName(room)}</span>
           <span class="room__time">${room.lastTime || ""}</span>
         </div>
+        ${room.topic ? `<div class="room__topic">${room.topic}</div>` : ""}
         <div class="room__last">${room.lastMessage}</div>
       </div>`;
     li.addEventListener("click", () => selectRoom(room.id));
@@ -165,15 +166,23 @@ function tempBadge(room) {
   const ti = tempInfo(room.temperature);
   return ti ? `<span class="room__temp room__temp--${ti.cls}">${room.temperature}°</span>` : "";
 }
-// 대화온도 UI(헤더 칩 + 방 배지) 갱신
+// 대화온도 UI(헤더 게이지 + 방 배지) 갱신
 function updateTempUI(room) {
   const ti = tempInfo(room.temperature);
   const tempEl = $("#chatTemp");
   if (tempEl) {
-    tempEl.className = "chat-temp" + (ti ? " chat-temp--" + ti.cls : "");
-    tempEl.innerHTML = ti ? `${ti.emoji} 대화온도 ${room.temperature}° · ${ti.label}` : "";
+    if (!ti) { tempEl.className = "chat-temp"; tempEl.innerHTML = ""; }
+    else {
+      const pct = Math.max(4, Math.min(100, room.temperature));
+      tempEl.className = "chat-temp chat-temp--" + ti.cls;
+      tempEl.innerHTML =
+        `<span class="chat-temp__label">${ti.emoji} 대화온도</span>` +
+        `<span class="chat-temp__bar"><i style="width:${pct}%"></i></span>` +
+        `<span class="chat-temp__num">${room.temperature}°</span>`;
+    }
   }
-  const badge = $(".room__temp");
+  // 활성 방의 배지만 갱신 (방이 여러 개)
+  const badge = document.querySelector(`.room[data-room-id="${room.id}"] .room__temp`);
   if (badge && ti) {
     badge.className = "room__temp room__temp--" + ti.cls;
     badge.textContent = room.temperature + "°";
@@ -453,6 +462,7 @@ function presetInterpret(text, coupleMode) {
 // 사전에 없는 메시지를 위한 규칙 기반 안전 해석
 function genericInterpret(text) {
   return {
+    meaning: "글자 뒤에 표현되지 않은 마음이 따로 있을 수 있어요",
     innerThoughts: [
       "이 말 안에는 글자 그대로의 뜻과, 표현되지 않은 마음이 함께 있을 수 있어요.",
       "지금 감정이 정리되지 않아 짧게/모호하게 말한 신호일 수 있어요.",
@@ -481,7 +491,8 @@ function renderTranslation(message) {
   const moreBtn = $(".trans-more");
   if (moreBtn) { moreBtn.setAttribute("aria-expanded", "false"); moreBtn.textContent = "왜 그런지 자세히 보기 ▾"; }
 
-  $("#selText").textContent = message.text;
+  $("#selText").textContent = `"${message.text}"`;
+  $("#coreMeaning").textContent = d.meaning || (d.innerThoughts && d.innerThoughts[0]) || "";
   fillList($("#innerThoughts"), d.innerThoughts);
   $("#wantedReaction").textContent = d.wantedReaction;
   $("#riskyReply").textContent = d.riskyReply;
