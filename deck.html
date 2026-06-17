@@ -15,10 +15,10 @@
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{height:100%}
-  body{font-family:var(--font); color:var(--ink); overflow:hidden; background:#efe7e0;}
+  body{font-family:var(--font); color:var(--ink); overflow:hidden; background:#efe7e0; word-break:keep-all;}
   .stage{position:fixed;inset:0;display:grid;place-items:center}
   .slide{
-    position:absolute; inset:0; display:none; place-items:center; padding:7vmin 10vmin;
+    position:absolute; inset:0; display:none; place-items:center; padding:6vmin 9vmin;
     opacity:0; transform:translateY(12px) scale(.99); transition:opacity .5s ease, transform .5s ease;
   }
   .slide.active{display:grid; opacity:1; transform:none;}
@@ -29,13 +29,11 @@
     border:1px solid #fbd6e3;padding:7px 16px;border-radius:999px;margin-bottom:22px}
   h1{font-family:var(--round);font-weight:700;letter-spacing:-1.5px;line-height:1.1;color:var(--ink)}
   .grad{background:linear-gradient(100deg,var(--rose),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .muted{color:var(--ink-soft)}
 
   .bg-cream{background:radial-gradient(820px 520px at 12% -10%,var(--rose-soft),transparent 56%),radial-gradient(820px 520px at 100% 4%,var(--lav-soft),transparent 54%),#fbf5f0}
   .bg-ink{background:radial-gradient(760px 480px at 86% 112%,#3a2740,transparent 60%),#241a22;color:#fdf6f0}
   .bg-soft{background:linear-gradient(135deg,#fff,#fbf2f6)}
 
-  /* 이미지 자리(없으면 안내 placeholder) */
   .ph{display:grid;place-items:center;text-align:center;background:repeating-linear-gradient(45deg,#f6ecf1,#f6ecf1 10px,#fbf4f7 10px,#fbf4f7 20px);
     color:#b89aac;font-weight:700;border:1.5px dashed #e7c9d8;border-radius:16px;font-size:13px;line-height:1.6}
   .ph span{font-size:11px;font-weight:600;opacity:.8}
@@ -48,46 +46,40 @@
   .s1 .sub b{color:var(--rose);font-weight:700}
   .s1 .mong{width:clamp(76px,9vw,118px);margin:0 auto 4px;display:block}
 
-  /* S2 훅 — 좌 이미지 / 우 인용 */
-  .s2 .grid{display:grid;grid-template-columns:0.82fr 1.18fr;gap:48px;align-items:center}
+  /* S2 */
+  .s2 .grid{display:grid;grid-template-columns:0.8fr 1.2fr;gap:46px;align-items:center}
   .s2 .poster{aspect-ratio:3/4;border-radius:18px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35)}
   .s2 .poster img{width:100%;height:100%;object-fit:cover;display:block}
   .s2 .poster .ph{width:100%;height:100%}
   .s2 .eyebrow{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#ffc2d4}
-  .quote{font-family:var(--round);font-size:clamp(17px,2.2vw,28px);line-height:1.55;margin:0 0 20px;position:relative;padding-left:24px}
+  .quote{font-family:var(--round);font-size:clamp(17px,2.2vw,28px);line-height:1.55;margin:0 0 22px;position:relative;padding-left:24px}
   .quote::before{content:"";position:absolute;left:0;top:5px;bottom:5px;width:4px;border-radius:4px;background:linear-gradient(var(--rose),var(--lav))}
-  .quote .who{display:block;font-family:var(--font);font-size:clamp(11px,1.2vw,14px);color:#caa9b9;margin-top:6px;font-weight:600}
   .s2 .punch{margin-top:26px;font-size:clamp(16px,1.9vw,24px);font-weight:700;line-height:1.45}
   .s2 .punch b{color:#ff9bb8}
 
-  /* S3 작품 */
+  /* S3 — 작품 이미지 갤러리 */
+  .s3 .inner{text-align:center}
   .s3 h1{font-size:clamp(26px,3.8vw,46px)}
-  .works{display:flex;gap:18px;margin:34px 0 28px}
-  .work{flex:1;background:#fff;border:1.5px solid #f1e2ea;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(199,120,150,.12);display:flex;flex-direction:column}
-  .work .cover{aspect-ratio:4/3;overflow:hidden;background:#faf2f6}
-  .work .cover img{width:100%;height:100%;object-fit:cover;display:block}
-  .work .cover .ph{width:100%;height:100%;border:0;border-radius:0;border-bottom:1.5px dashed #e7c9d8}
-  .work .meta{padding:14px 16px}
-  .work .k{font-size:11px;font-weight:800;color:var(--rose);letter-spacing:.5px}
-  .work .t{font-size:clamp(14px,1.5vw,18px);font-weight:700;margin-top:5px;line-height:1.35}
-  .s3 .bridge{font-size:clamp(17px,2.2vw,28px);font-weight:800;line-height:1.45}
+  .gallery{display:flex;justify-content:center;align-items:center;gap:30px;margin:34px 0 30px}
+  .gallery .g{height:clamp(210px,33vh,320px);border-radius:16px;overflow:hidden;box-shadow:0 16px 40px rgba(199,120,150,.22);background:#faf2f6}
+  .gallery .g img{height:100%;width:auto;display:block}
+  .gallery .g .ph{height:100%;width:230px}
+  .s3 .bridge{font-size:clamp(18px,2.3vw,30px);font-weight:800;line-height:1.45}
 
-  /* S4 제품 — 좌 텍스트 / 우 캡처 */
-  .s4 h1{font-size:clamp(24px,3.4vw,42px);margin-bottom:28px}
-  .s4 .grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
-  .steps{display:flex;flex-direction:column;gap:14px}
-  .step{background:#fff;border:1.5px solid #f1e2ea;border-radius:16px;padding:16px 18px;box-shadow:0 8px 22px rgba(199,120,150,.1);display:flex;gap:14px;align-items:flex-start}
-  .step .n{flex-shrink:0;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;font-size:13px;background:linear-gradient(135deg,var(--rose),var(--lav))}
-  .step .h{font-size:clamp(15px,1.7vw,19px);font-weight:800}
-  .step .d{font-size:clamp(12px,1.3vw,15px);color:var(--ink-soft);line-height:1.45;margin-top:2px}
-  .shot{border-radius:16px;overflow:hidden;box-shadow:0 24px 56px rgba(199,120,150,.28);border:1px solid #f0dce6}
+  /* S4 — 가로 캡처 히어로 */
+  .s4 .inner{width:min(1160px,94vw);text-align:center}
+  .s4 h1{font-size:clamp(22px,3vw,38px);margin-bottom:18px}
+  .shot{margin:0 auto;width:min(930px,94%);border-radius:14px;overflow:hidden;box-shadow:0 22px 54px rgba(199,120,150,.28);border:1px solid #f0dce6;background:#fff}
   .shot img{width:100%;display:block}
-  .shot .ph{aspect-ratio:16/10;width:100%}
-  .s4 .kicker{margin-top:24px;font-size:clamp(14px,1.7vw,20px);font-weight:700}
+  .shot .ph{aspect-ratio:2.1/1;width:100%}
+  .s4 .row{display:flex;justify-content:center;gap:12px;margin:20px 0 12px;flex-wrap:wrap}
+  .stepc{background:#fff;border:1.5px solid #f1e2ea;border-radius:13px;padding:11px 18px;box-shadow:0 6px 18px rgba(199,120,150,.1);font-size:clamp(12px,1.35vw,16px);font-weight:600;color:var(--ink-soft)}
+  .stepc b{color:var(--rose);font-weight:800;margin-right:7px}
+  .s4 .kicker{font-size:clamp(13px,1.55vw,19px);font-weight:700}
   .s4 .kicker b{color:var(--rose)}
-  .s4 .url{margin-top:8px;font-size:13px;color:var(--ink-soft);font-weight:600}
+  .s4 .url{color:var(--ink-soft);font-weight:700;font-size:clamp(12px,1.3vw,15px);margin-left:6px}
 
-  /* S5 비전 */
+  /* S5 */
   .s5 h1{font-size:clamp(26px,3.8vw,46px);margin-bottom:30px}
   .vis{display:flex;flex-direction:column;gap:14px}
   .v{display:flex;align-items:center;gap:18px;background:#fff;border:1.5px solid #f1e2ea;border-radius:16px;padding:18px 22px;box-shadow:0 8px 22px rgba(199,120,150,.1)}
@@ -132,12 +124,12 @@
         <div class="grid">
           <div class="poster">
             <img src="assets/drama.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" />
-            <div class="ph" style="display:none">🎬 드라마 장면/포스터<br/><span>assets/drama.jpg</span></div>
+            <div class="ph" style="display:none">🎬 드라마 포스터<br/><span>assets/drama.jpg</span></div>
           </div>
           <div>
             <span class="eyebrow">드라마 〈이 사랑 통역되나요?〉</span>
             <p class="quote">"내가 알아듣게 얘기해요.<br/>당신의 언어는 나한테 너무 어려워요."</p>
-            <p class="quote">"세상에 다른 언어가 몇 개인 줄 아나?<br/>… 세상 모든 사람의 수만큼 있지."<span class="who">— 극 중 대사</span></p>
+            <p class="quote">"세상에 다른 언어가 몇 개인 줄 아나?<br/>… 세상 모든 사람의 수만큼 있지."</p>
             <p class="punch">같은 한국어를 써도, 우리는 <b>서로 다른 언어</b>를 씁니다.</p>
           </div>
         </div>
@@ -148,21 +140,11 @@
     <section class="slide s3 bg-soft">
       <div class="inner">
         <h1>남녀의 언어 차이,<br/>모두가 알던 오랜 숙제</h1>
-        <div class="works">
-          <div class="work">
-            <div class="cover"><img src="assets/book.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" /><div class="ph" style="display:none">📚 책 표지<br/><span>assets/book.jpg</span></div></div>
-            <div class="meta"><div class="k">📚 BOOK</div><div class="t">화성에서 온 남자,<br/>금성에서 온 여자</div></div>
-          </div>
-          <div class="work">
-            <div class="cover"><img src="assets/song.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" /><div class="ph" style="display:none">🎵 앨범 이미지<br/><span>assets/song.jpg</span></div></div>
-            <div class="meta"><div class="k">🎵 SONG</div><div class="t">자우림<br/>"대화가 필요해"</div></div>
-          </div>
-          <div class="work">
-            <div class="cover"><img src="assets/drama.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" /><div class="ph" style="display:none">📺 드라마<br/><span>assets/drama.jpg</span></div></div>
-            <div class="meta"><div class="k">📺 DRAMA</div><div class="t">이 사랑<br/>통역되나요?</div></div>
-          </div>
+        <div class="gallery">
+          <div class="g"><img src="assets/book.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" /><div class="ph" style="display:none">📚 책<br/><span>assets/book.jpg</span></div></div>
+          <div class="g"><img src="assets/song.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" /><div class="ph" style="display:none">🎵 노래<br/><span>assets/song.jpg</span></div></div>
         </div>
-        <p class="bridge">남녀의 다른 언어, <span class="grad">AI로 통역해보면 어떨까?</span></p>
+        <p class="bridge"><span class="grad">AI로 사랑을 통역할 수 있지 않을까?</span></p>
       </div>
     </section>
 
@@ -170,19 +152,16 @@
     <section class="slide s4 bg-cream">
       <div class="inner">
         <h1>그래서 만들었습니다</h1>
-        <div class="grid">
-          <div class="steps">
-            <div class="step"><div class="n">1</div><div><div class="h">감지</div><div class="d">오해가 생길 만한 애매한 한마디를 AI가 캐치</div></div></div>
-            <div class="step"><div class="n">2</div><div><div class="h">통역</div><div class="d">"됐어 오지마"의 진짜 속뜻을 알려줘요</div></div></div>
-            <div class="step"><div class="n">3</div><div><div class="h">답장 추천</div><div class="d">하면 안 되는 답변 + 관계를 지키는 답장</div></div></div>
-            <p class="kicker">내 답장에 따라 상대 반응과 <b>'대화온도'</b>가 실시간으로 바뀝니다.</p>
-            <p class="url">🔗 love-translator-demo.vercel.app</p>
-          </div>
-          <div class="shot">
-            <img src="assets/demo.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" />
-            <div class="ph" style="display:none">📱 제품 화면 캡처<br/><span>assets/demo.png</span></div>
-          </div>
+        <div class="shot">
+          <img src="assets/demo.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" />
+          <div class="ph" style="display:none">📱 제품 화면 캡처<br/><span>assets/demo.png</span></div>
         </div>
+        <div class="row">
+          <div class="stepc"><b>① 감지</b>애매한 한마디를 캐치</div>
+          <div class="stepc"><b>② 통역</b>진짜 속뜻을 알려줘요</div>
+          <div class="stepc"><b>③ 답장 추천</b>관계를 지키는 답장</div>
+        </div>
+        <p class="kicker">내 답장에 따라 상대 반응과 <b>'대화온도'</b>가 실시간으로 바뀝니다.<span class="url">🔗 love-translator-demo.vercel.app</span></p>
       </div>
     </section>
 
