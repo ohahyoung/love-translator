@@ -204,7 +204,7 @@ function selectRoom(id) {
 
   $("#chatAvatar").innerHTML = avatarInner(room);
   $("#chatName").textContent = displayName(room);
-  $("#chatMeta").textContent = `${room.relationship} · 봇 연결됨`;
+  $("#chatMeta").textContent = `${room.relationship}${room.topic ? " · " + room.topic : " · 봇 연결됨"}`;
   updateTempUI(room);
   resetTranslation();
 
@@ -214,7 +214,7 @@ function selectRoom(id) {
 
 /* ---------------- 가이드 시나리오 엔진 ---------------- */
 // 등장 속도(ms) — 너무 빠르지 않게
-const PACE = { typing: 1300, themGap: 650, meGap: 800, sep: 700, reactTyping: 1500, betweenSeg: 1100 };
+const PACE = { setupGap: 230, setupSep: 320, reactTyping: 1500, betweenSeg: 1100 };
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 function highlightActive() {
   $$(".room").forEach((el) => el.classList.toggle("is-active", el.dataset.roomId === state.activeRoomId));
@@ -236,27 +236,21 @@ async function revealSegment(room, idx, gen) {
   if (!seg) return;
   state.revealing = true;
   room._awaiting = false;
+  // 셋업(상황 대화)은 빠르게 등장 — 극적인 타이핑은 '상대 반응'에만 쓴다(피칭 시 죽은 시간 제거)
   for (const m of seg) {
     if (gen !== state.scenarioGen) return; // 새 시나리오로 교체됨 → 중단
     if (m.sep) {
       room.messages.push({ sep: m.sep });
       renderChat(room);
-      await delay(PACE.sep);
+      await delay(PACE.setupSep);
       continue;
-    }
-    if (m.from === "them") {
-      room.messages.push({ id: "typing", from: "them", typing: true });
-      renderChat(room);
-      await delay(PACE.typing);
-      if (gen !== state.scenarioGen) return;
-      room.messages = room.messages.filter((x) => !x.typing);
     }
     room.messages.push({ ...m, id: "m" + idx + "_" + room.messages.length });
     if (m.text) { room.lastMessage = m.text; room._clock = m.time || room._clock; }
     renderChat(room);
     renderRooms();
     highlightActive();
-    await delay(m.from === "them" ? PACE.themGap : PACE.meGap);
+    await delay(PACE.setupGap);
   }
   if (gen !== state.scenarioGen) return;
   state.revealing = false;
