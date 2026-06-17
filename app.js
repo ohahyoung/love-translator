@@ -479,6 +479,7 @@ function renderTranslation(message) {
   $("#transEmpty").innerHTML = `<div class="trans-empty__icon">🔍</div><p>통역할 말을 선택해 주세요.<br><span class="muted">상대 말풍선 옆 <b>통역하기</b> 버튼을 누르면 돼요.</span></p>`;
   const result = $("#transResult");
   result.hidden = false;
+  result.scrollTop = 0; // 통역기 위젯이 항상 맨 위에 보이도록
 
   // 새 통역마다 상세는 접힌 상태로 시작
   $("#transDetail").hidden = true;

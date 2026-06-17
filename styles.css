@@ -598,3 +598,6 @@ body {
 .tr2__row--out .tr2__tag { color: var(--rose-deep); }
 .tr2__div { position: relative; text-align: center; height: 0; margin: 0 14px; border-top: 1.5px dashed #efdbe6; }
 .tr2__div span { position: relative; top: -9px; background: #fff; padding: 0 10px; font-size: 11px; font-weight: 700; color: var(--lavender); }
+
+/* 통역 결과 카드들이 화면 높이가 짧을 때 찌그러지지 않게(통역기 위젯 사라짐 버그 수정) */
+.trans-result > * { flex-shrink: 0; }
