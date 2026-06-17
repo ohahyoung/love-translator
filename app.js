@@ -54,7 +54,7 @@ document.addEventListener("click", (e) => {
       const willOpen = detail.hidden;
       detail.hidden = !willOpen;
       btn.setAttribute("aria-expanded", String(willOpen));
-      btn.textContent = willOpen ? "간단히 보기 ▴" : "왜 그런지 자세히 보기 ▾";
+      btn.textContent = willOpen ? "접기 ▴" : "속마음·원하는 반응 더 보기 ▾";
       break;
     }
 
@@ -489,7 +489,7 @@ function renderTranslation(message) {
   // 새 통역마다 상세는 접힌 상태로 시작
   $("#transDetail").hidden = true;
   const moreBtn = $(".trans-more");
-  if (moreBtn) { moreBtn.setAttribute("aria-expanded", "false"); moreBtn.textContent = "왜 그런지 자세히 보기 ▾"; }
+  if (moreBtn) { moreBtn.setAttribute("aria-expanded", "false"); moreBtn.textContent = "속마음·원하는 반응 더 보기 ▾"; }
 
   $("#selText").textContent = `"${message.text}"`;
   $("#coreMeaning").textContent = d.meaning || (d.innerThoughts && d.innerThoughts[0]) || "";

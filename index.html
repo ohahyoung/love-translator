@@ -136,7 +136,11 @@
         <span class="bot-status__text">사랑통역봇 연결됨</span>
       </div>
 
-      <div class="rooms__head">연결된 대화방</div>
+      <div class="demo-banner">
+        <div class="demo-banner__title">✨ 이렇게 통역해보세요</div>
+        <div class="demo-banner__sub">예시 대화 3개 — 말풍선의 <b>통역하기</b>를 눌러 체험해보세요</div>
+      </div>
+      <div class="rooms__head">예시 대화방</div>
       <ul id="roomList" class="rooms"></ul>
 
       <div class="left-foot">
@@ -188,20 +192,31 @@
 
       <!-- 결과 -->
       <div id="transResult" class="trans-result" hidden>
-        <!-- 핵심: 통역기 (그 사람 말 → 진짜 속뜻) -->
+        <!-- 핵심: 통역기 (여자어 → 진짜 속뜻) -->
         <div class="tr2">
+          <div class="tr2__bar">
+            <span class="tr2__lang tr2__lang--f">♀ 여자어</span>
+            <span class="tr2__swap">⇄</span>
+            <span class="tr2__lang tr2__lang--m">♂ 남자어</span>
+          </div>
           <div class="tr2__row">
-            <span class="tr2__lang">그 사람 말</span>
+            <span class="tr2__tag">그 사람이 한 말</span>
             <p class="tr2__said" id="selText"></p>
           </div>
-          <div class="tr2__arrow">통역하면 ↓</div>
+          <div class="tr2__div"><span>통역하면 ↓</span></div>
           <div class="tr2__row tr2__row--out">
-            <span class="tr2__lang">💗 진짜 속뜻</span>
+            <span class="tr2__tag">💗 진짜 속뜻</span>
             <p class="tr2__mean" id="coreMeaning"></p>
           </div>
         </div>
 
-        <!-- 추천 답장 (바로 액션) -->
+        <!-- 근거 -->
+        <div class="trans-card">
+          <div class="trans-card__title">🧭 왜 이렇게 봤을까요</div>
+          <ul id="basis" class="trans-list trans-list--basis"></ul>
+        </div>
+
+        <!-- 추천 답장 -->
         <div class="trans-card trans-card--reply">
           <div class="trans-card__title">💬 이렇게 답해보세요</div>
           <div id="replies" class="replies"></div>
@@ -209,7 +224,7 @@
         </div>
 
         <!-- 자세히 (접기) -->
-        <button class="trans-more" data-action="toggle-detail" aria-expanded="false">왜 그런지 자세히 보기 ▾</button>
+        <button class="trans-more" data-action="toggle-detail" aria-expanded="false">속마음·원하는 반응 더 보기 ▾</button>
         <div class="trans-detail" id="transDetail" hidden>
           <div class="trans-card">
             <div class="trans-card__title">🫥 속마음 후보</div>
@@ -223,10 +238,6 @@
             <div class="trans-card__title">⚠️ 이렇게 답하면 위험해요</div>
             <div class="trans-risk__reply" id="riskyReply"></div>
             <p id="riskWhy" class="trans-text muted"></p>
-          </div>
-          <div class="trans-card">
-            <div class="trans-card__title">🧭 왜 이렇게 봤을까요</div>
-            <ul id="basis" class="trans-list trans-list--basis"></ul>
           </div>
         </div>
       </div>

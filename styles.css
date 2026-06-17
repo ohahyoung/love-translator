@@ -581,3 +581,20 @@ body {
 }
 .couple-info:hover .couple-info__tip,
 .couple-info:focus .couple-info__tip { opacity: 1; visibility: visible; transform: translateY(0); }
+
+/* 왼쪽 — 데모 안내 배너 */
+.demo-banner { margin: 4px 16px 10px; padding: 11px 13px; border-radius: var(--radius-sm); background: linear-gradient(100deg, var(--rose-soft), var(--lav-soft)); border: 1px solid #fbd6e3; }
+.demo-banner__title { font-size: 13px; font-weight: 800; color: var(--rose-deep); }
+.demo-banner__sub { font-size: 11.5px; color: var(--ink-soft); margin-top: 3px; line-height: 1.45; }
+.demo-banner__sub b { color: var(--rose-deep); }
+
+/* 통역기 위젯 — 여자어 ⇄ 남자어 바 */
+.tr2__bar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; padding: 10px 14px; background: linear-gradient(100deg, #fdeef3, #eef1fb); border-bottom: 1px solid var(--line); }
+.tr2__lang { font-size: 13px; font-weight: 700; text-align: center; }
+.tr2__lang--f { color: var(--rose-deep); }
+.tr2__lang--m { color: #4a78b0; }
+.tr2__swap { width: 24px; height: 24px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-size: 12px; color: var(--ink-soft); box-shadow: var(--shadow-sm); }
+.tr2__tag { font-size: 11px; font-weight: 700; color: var(--ink-faint); letter-spacing: .2px; }
+.tr2__row--out .tr2__tag { color: var(--rose-deep); }
+.tr2__div { position: relative; text-align: center; height: 0; margin: 0 14px; border-top: 1.5px dashed #efdbe6; }
+.tr2__div span { position: relative; top: -9px; background: #fff; padding: 0 10px; font-size: 11px; font-weight: 700; color: var(--lavender); }
