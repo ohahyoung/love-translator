@@ -214,7 +214,7 @@ function selectRoom(id) {
 
 /* ---------------- 가이드 시나리오 엔진 ---------------- */
 // 등장 속도(ms) — 너무 빠르지 않게
-const PACE = { setupGap: 230, setupSep: 320, reactTyping: 1500, betweenSeg: 1100 };
+const PACE = { typing: 900, themGap: 480, meGap: 560, sep: 600, reactTyping: 1500, betweenSeg: 1100 };
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 function highlightActive() {
   $$(".room").forEach((el) => el.classList.toggle("is-active", el.dataset.roomId === state.activeRoomId));
@@ -236,21 +236,28 @@ async function revealSegment(room, idx, gen) {
   if (!seg) return;
   state.revealing = true;
   room._awaiting = false;
-  // 셋업(상황 대화)은 빠르게 등장 — 극적인 타이핑은 '상대 반응'에만 쓴다(피칭 시 죽은 시간 제거)
+  // 상대 메시지는 '입력 중…' 신호 후 등장, 사이에 자연스러운 텀
   for (const m of seg) {
     if (gen !== state.scenarioGen) return; // 새 시나리오로 교체됨 → 중단
     if (m.sep) {
       room.messages.push({ sep: m.sep });
       renderChat(room);
-      await delay(PACE.setupSep);
+      await delay(PACE.sep);
       continue;
+    }
+    if (m.from === "them") {
+      room.messages.push({ id: "typing", from: "them", typing: true });
+      renderChat(room);
+      await delay(PACE.typing);
+      if (gen !== state.scenarioGen) return;
+      room.messages = room.messages.filter((x) => !x.typing);
     }
     room.messages.push({ ...m, id: "m" + idx + "_" + room.messages.length });
     if (m.text) { room.lastMessage = m.text; room._clock = m.time || room._clock; }
     renderChat(room);
     renderRooms();
     highlightActive();
-    await delay(PACE.setupGap);
+    await delay(m.from === "them" ? PACE.themGap : PACE.meGap);
   }
   if (gen !== state.scenarioGen) return;
   state.revealing = false;
